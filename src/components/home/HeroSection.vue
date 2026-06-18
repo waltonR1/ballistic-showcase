@@ -96,17 +96,17 @@ onMounted(() => {
 <style scoped>
 .hero {
   min-height: 100vh;
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
+  grid-template-columns: minmax(0, 1fr) minmax(520px, 0.88fr);
   align-items: center;
-  gap: 72px;
-  padding: 120px 0 96px;
+  gap: clamp(56px, 6vw, 112px);
+  padding: 112px 0 88px;
 }
 
 .hero__content {
-  max-width: 620px;
+  max-width: 820px;
 }
 
 .hero__eyebrow {
@@ -120,14 +120,14 @@ onMounted(() => {
 .hero__title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(54px, 6vw, 86px);
+  font-size: clamp(64px, 5.7vw, 124px);
   line-height: 0.95;
   letter-spacing: -0.07em;
-  max-width: 680px;
+  max-width: 920px;
 }
 
 .hero__description {
-  max-width: 560px;
+  max-width: 720px;
   margin: 28px 0 0;
   font-size: 17px;
   line-height: 1.9;
@@ -167,7 +167,7 @@ onMounted(() => {
 
 .hero__visual {
   position: relative;
-  min-height: 620px;
+  min-height: clamp(560px, 58vh, 760px);
   border: 1px solid var(--color-line);
   border-radius: 40px;
   overflow: hidden;
@@ -213,7 +213,7 @@ onMounted(() => {
 
 .hero__core {
   position: relative;
-  width: min(68%, 460px);
+  width: min(68%, 560px);
   aspect-ratio: 1;
 }
 
@@ -348,11 +348,16 @@ onMounted(() => {
   color: var(--color-text);
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1180px) {
   .hero {
     grid-template-columns: 1fr;
     gap: 40px;
     padding-top: 120px;
+  }
+
+  .hero__content,
+  .hero__description {
+    max-width: 760px;
   }
 
   .hero__visual {
@@ -361,6 +366,35 @@ onMounted(() => {
 
   .hero__core {
     width: min(78%, 360px);
+  }
+}
+
+@media (max-width: 640px) {
+  .hero {
+    min-height: auto;
+    padding: 112px 0 72px;
+  }
+
+  .hero__title {
+    font-size: clamp(48px, 14vw, 68px);
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero__button {
+    width: 100%;
+  }
+
+  .hero__visual {
+    min-height: 360px;
+    border-radius: 28px;
+  }
+
+  .hero__floating {
+    max-width: calc(100% - 32px);
   }
 }
 

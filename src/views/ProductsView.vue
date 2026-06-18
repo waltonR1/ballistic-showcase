@@ -40,7 +40,7 @@ import { assetUrl } from '@/utils/asset'
 
 .products-page__hero,
 .products-page__grid {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
 }
 

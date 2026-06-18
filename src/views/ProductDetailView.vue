@@ -135,7 +135,7 @@ onMounted(() => {
 }
 
 .product-hero {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   min-height: calc(100vh - 120px);
   margin: 0 auto;
   display: grid;
@@ -311,7 +311,7 @@ onMounted(() => {
 }
 
 .product-overview {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 80px auto 0;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -388,7 +388,7 @@ onMounted(() => {
 }
 
 .product-notice {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 20px auto 0;
   padding: 38px;
   display: grid;
@@ -406,7 +406,7 @@ onMounted(() => {
 }
 
 .product-cta {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 80px auto 120px;
   padding: 56px;
   display: flex;
@@ -447,7 +447,7 @@ onMounted(() => {
 }
 
 .not-found {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 160px auto;
 }
 

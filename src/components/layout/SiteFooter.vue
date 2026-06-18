@@ -34,7 +34,7 @@
 
 <style scoped>
 .site-footer {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto 40px;
   padding: 48px 0 0;
   border-top: 1px solid var(--color-line);

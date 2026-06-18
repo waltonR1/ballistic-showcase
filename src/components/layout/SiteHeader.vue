@@ -75,7 +75,7 @@ onUnmounted(() => {
 }
 
 .site-header__inner {
-  width: min(100% - 48px, var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   height: 76px;
   margin: 0 auto;
   display: flex;
@@ -176,7 +176,7 @@ onUnmounted(() => {
   background: var(--color-text);
 }
 
-@media (max-width: 820px) {
+@media (max-width: 1020px) {
   .site-header__nav {
     position: fixed;
     top: 76px;

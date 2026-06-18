@@ -112,7 +112,7 @@ onMounted(() => {
 
 <style scoped>
 .management-section {
-  width: min(calc(100% - 48px), var(--container));
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
   padding: 120px 0;
 }
