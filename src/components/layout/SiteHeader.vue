@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
+const currentLocale = ref<'CN' | 'FR'>('CN')
 
 function handleScroll() {
   isScrolled.value = window.scrollY > 20
@@ -11,6 +12,10 @@ function handleScroll() {
 
 function closeMenu() {
   isMenuOpen.value = false
+}
+
+function toggleLocale() {
+  currentLocale.value = currentLocale.value === 'CN' ? 'FR' : 'CN'
 }
 
 onMounted(() => {
@@ -26,30 +31,40 @@ onUnmounted(() => {
 <template>
   <header class="site-header" :class="{ 'site-header--scrolled': isScrolled }">
     <div class="site-header__inner">
-      <a href="#" class="site-header__brand" @click="closeMenu">
-        <img src="/favicon.ico" alt="Logo" class="site-header__logo" />
-        <span class="site-header__text-logo"> 铠福科技 </span>
-      </a>
+      <RouterLink to="/" class="site-header__brand" @click="closeMenu">
+        <img src="/favicon.ico" alt="铠福科技" class="site-header__logo" />
+        <span class="site-header__text-logo">铠福科技</span>
+      </RouterLink>
 
       <nav class="site-header__nav" :class="{ 'site-header__nav--open': isMenuOpen }">
         <RouterLink to="/" @click="closeMenu">首页</RouterLink>
         <RouterLink to="/products" @click="closeMenu">产品系列</RouterLink>
-        <RouterLink :to="{ path: '/', hash: '#quality' }" @click="closeMenu"> 生产能力 </RouterLink>
-        <RouterLink :to="{ path: '/', hash: '#technology' }" @click="closeMenu">
-          防护技术
-        </RouterLink>
-        <RouterLink :to="{ path: '/', hash: '#management' }" @click="closeMenu">
-          法国管理
-        </RouterLink>
-        <RouterLink :to="{ path: '/', hash: '#contact' }" @click="closeMenu"> 联系询盘 </RouterLink>
+        <RouterLink to="/scenarios" @click="closeMenu">应用场景</RouterLink>
+        <RouterLink to="/resources" @click="closeMenu">资料中心</RouterLink>
       </nav>
 
       <div class="site-header__actions">
-        <RouterLink :to="{ path: '/', hash: '#contact' }" class="site-header__cta">
-          申请资料
-        </RouterLink>
+        <button
+          class="site-header__language"
+          type="button"
+          aria-label="语言切换"
+          title="Language"
+          @click="toggleLocale"
+        >
+          <span class="site-header__language-icon">文</span>
+          <span class="site-header__language-options">
+            <strong :class="{ 'is-active': currentLocale === 'CN' }">CN</strong>
+            <i>/</i>
+            <strong :class="{ 'is-active': currentLocale === 'FR' }">FR</strong>
+          </span>
+        </button>
 
-        <button class="site-header__menu-button" type="button" @click="isMenuOpen = !isMenuOpen">
+        <button
+          class="site-header__menu-button"
+          type="button"
+          aria-label="打开导航"
+          @click="isMenuOpen = !isMenuOpen"
+        >
           <span></span>
           <span></span>
         </button>
@@ -78,15 +93,16 @@ onUnmounted(() => {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   height: 68.4px;
   margin: 0 auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
 }
 
 .site-header__brand {
   display: inline-flex;
   align-items: center;
   gap: 10.8px;
+  justify-self: start;
 }
 
 .site-header__logo {
@@ -105,7 +121,8 @@ onUnmounted(() => {
 .site-header__nav {
   display: flex;
   align-items: center;
-  gap: 27px;
+  justify-self: center;
+  gap: 34.2px;
 }
 
 .site-header__nav a {
@@ -137,25 +154,69 @@ onUnmounted(() => {
 .site-header__actions {
   display: flex;
   align-items: center;
+  justify-self: end;
   gap: 12.6px;
 }
 
-.site-header__cta {
+.site-header__language {
   height: 34.2px;
-  padding: 0 16.2px;
+  padding: 0 12.6px 0 7.2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7.2px;
+  border: 0.9px solid var(--color-line-strong);
+  border-radius: 899.1px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 10.8px;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease;
+}
+
+.site-header__language:hover {
+  border-color: rgba(244, 241, 234, 0.32);
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.site-header__language-icon {
+  width: 22.5px;
+  height: 22.5px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 0.9px solid var(--color-line-strong);
-  border-radius: 899.1px;
-  font-size: 11.7px;
-  color: var(--color-text);
-  transition: 0.25s ease;
-}
-
-.site-header__cta:hover {
+  border-radius: 50%;
   background: var(--color-text);
   color: #08090a;
+  font-family: var(--font-main);
+  font-size: 11.7px;
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.site-header__language-options {
+  display: inline-flex;
+  align-items: center;
+  gap: 5.4px;
+  color: var(--color-text-muted);
+}
+
+.site-header__language-options strong {
+  font-weight: 600;
+  color: var(--color-text-muted);
+  transition: color 0.2s ease;
+}
+
+.site-header__language-options strong.is-active {
+  color: var(--color-text);
+}
+
+.site-header__language-options i {
+  color: rgba(255, 255, 255, 0.28);
+  font-style: normal;
 }
 
 .site-header__menu-button {
@@ -177,6 +238,11 @@ onUnmounted(() => {
 }
 
 @media (max-width: 918px) {
+  .site-header__inner {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .site-header__nav {
     position: fixed;
     top: 68.4px;
@@ -197,8 +263,12 @@ onUnmounted(() => {
     display: flex;
   }
 
-  .site-header__cta {
+  .site-header__language-options {
     display: none;
+  }
+
+  .site-header__language {
+    padding: 0 5.4px;
   }
 
   .site-header__menu-button {

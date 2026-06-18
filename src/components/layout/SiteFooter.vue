@@ -1,33 +1,41 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
+
 <template>
   <footer class="site-footer">
     <div class="site-footer__inner">
-      <div class="site-footer__left">
+      <section class="site-footer__brand">
         <p>铠福科技</p>
-        <h3>专业弹道防护装备展示平台</h3>
-        <span> 面向法国及欧洲专业客户，提供产品展示、资料对接与销售沟通服务。</span>
-      </div>
+        <h3>弹道防护装备展示与资料对接平台</h3>
+        <span>面向法国及欧洲专业客户，展示个人防护、硬质防护与特殊防护产品系列。</span>
+      </section>
 
-      <div class="site-footer__right">
-        <div>
-          <strong>Navigation</strong>
-          <a href="#">首页</a>
-          <a href="#products">产品系列</a>
-          <a href="#technology">防护技术</a>
-          <a href="#contact">联系询盘</a>
-        </div>
+      <section class="site-footer__group">
+        <strong>产品入口</strong>
+        <RouterLink to="/products/vest">防弹背心</RouterLink>
+        <RouterLink to="/products/helmet">防弹头盔</RouterLink>
+        <RouterLink to="/products/shield">防弹盾牌</RouterLink>
+        <RouterLink to="/products/plate">防弹插板</RouterLink>
+      </section>
 
-        <div>
-          <strong>Contact</strong>
-          <a href="mailto:contact@example.com">contact@example.com</a>
-          <span>France Sales Management</span>
-          <span>China Supply Chain Support</span>
-        </div>
-      </div>
+      <section class="site-footer__group">
+        <strong>业务说明</strong>
+        <span>中国供应链支持</span>
+        <span>法国销售管理</span>
+        <span>技术资料按需提供</span>
+        <span>具体等级以正式文件为准</span>
+      </section>
+
+      <section class="site-footer__contact">
+        <strong>联系方式</strong>
+        <a href="mailto:contact@kaifu-tech.com">contact@kaifu-tech.com</a>
+      </section>
     </div>
 
     <div class="site-footer__bottom">
       <span>© 2026 铠福科技</span>
+      <span>Ballistic Protection Equipment Showcase</span>
     </div>
   </footer>
 </template>
@@ -41,76 +49,89 @@
 }
 
 .site-footer__inner {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(260px, 1.35fr) repeat(3, minmax(150px, 0.75fr));
   gap: 43.2px;
-  padding-bottom: 25.2px;
+  padding-bottom: 30.6px;
 }
 
-.site-footer__left {
-  max-width: 414px;
-}
-
-.site-footer__left p {
+.site-footer__brand p,
+.site-footer__group strong,
+.site-footer__contact strong {
   margin: 0 0 10.8px;
+  display: block;
   font-family: var(--font-mono);
   font-size: 10.8px;
   letter-spacing: 0.22em;
   color: var(--color-accent);
 }
 
-.site-footer__left h3 {
+.site-footer__brand h3 {
+  max-width: 460px;
   margin: 0;
   font-size: 27px;
-  line-height: 1.1;
+  line-height: 1.12;
+  letter-spacing: -0.04em;
 }
 
-.site-footer__left span {
-  display: block;
-  margin-top: 14.4px;
-  line-height: 1.8;
+.site-footer__brand span,
+.site-footer__group a,
+.site-footer__group span,
+.site-footer__contact a,
+.site-footer__contact span {
   color: var(--color-text-soft);
+  font-size: 12.6px;
+  line-height: 1.8;
 }
 
-.site-footer__right {
-  display: flex;
-  gap: 57.6px;
+.site-footer__brand span {
+  display: block;
+  max-width: 430px;
+  margin-top: 14.4px;
 }
 
-.site-footer__right div {
+.site-footer__group,
+.site-footer__contact {
   display: flex;
   flex-direction: column;
-  gap: 9px;
+  gap: 7.2px;
 }
 
-.site-footer__right strong {
-  margin-bottom: 7.2px;
-  font-size: 12.6px;
+.site-footer__group a,
+.site-footer__contact a {
+  transition: color 0.25s ease;
 }
 
-.site-footer__right a,
-.site-footer__right span {
-  color: var(--color-text-soft);
-  font-size: 12.6px;
+.site-footer__group a:hover,
+.site-footer__contact a:hover {
+  color: var(--color-text);
+}
+
+.site-footer__contact span {
+  max-width: 230px;
+  color: var(--color-text-muted);
 }
 
 .site-footer__bottom {
   padding: 18px 0;
   display: flex;
   justify-content: space-between;
+  gap: 18px;
   border-top: 0.9px solid var(--color-line);
   color: var(--color-text-muted);
   font-size: 10.8px;
 }
 
-@media (max-width: 810px) {
+@media (max-width: 990px) {
   .site-footer__inner {
-    flex-direction: column;
+    grid-template-columns: 1fr 1fr;
   }
+}
 
-  .site-footer__right {
-    flex-direction: column;
-    gap: 21.6px;
+@media (max-width: 612px) {
+  .site-footer__inner {
+    grid-template-columns: 1fr;
+    gap: 27px;
   }
 
   .site-footer__bottom {
