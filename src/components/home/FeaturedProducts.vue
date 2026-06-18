@@ -65,7 +65,7 @@ onMounted(() => {
       <div class="products__header-row">
         <h2>核心产品系列</h2>
 
-        <span> 从个人防护到硬质防护组件，面向专业客户提供弹道防护装备展示与资料对接。 </span>
+        <span> 从个人防护到硬质防护组件，面向专业客户提供弹道防护装备展示与资料对接。</span>
       </div>
     </div>
 
@@ -89,6 +89,7 @@ onMounted(() => {
           <p>{{ item.nameFr }}</p>
           <h3>{{ item.nameZh }}</h3>
           <span>{{ item.descriptionZh }}</span>
+          <strong>{{ item.variants.length }} 个产品</strong>
         </div>
 
         <div class="product-card__tags">
@@ -112,17 +113,17 @@ onMounted(() => {
 .products {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
-  padding: 120px 0;
+  padding: 108px 0;
 }
 
 .products__header {
-  margin-bottom: 44px;
+  margin-bottom: 39.6px;
 }
 
 .products__header > p {
-  margin: 0 0 16px;
+  margin: 0 0 14.4px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   letter-spacing: 0.22em;
   color: var(--color-accent);
 }
@@ -130,21 +131,21 @@ onMounted(() => {
 .products__header-row {
   display: grid;
   grid-template-columns: 0.85fr 1fr;
-  gap: 48px;
+  gap: 43.2px;
   align-items: end;
 }
 
 .products__header h2 {
   margin: 0;
   font-family: var(--font-display);
-  font-size: clamp(42px, 5vw, 72px);
+  font-size: clamp(37.8px, 5vw, 64.8px);
   line-height: 0.95;
   letter-spacing: -0.06em;
 }
 
 .products__header span {
   display: block;
-  max-width: 620px;
+  max-width: 558px;
   color: var(--color-text-soft);
   line-height: 1.9;
 }
@@ -152,19 +153,19 @@ onMounted(() => {
 .products__grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  gap: 19.8px;
 }
 
 .product-card {
   position: relative;
-  min-height: 560px;
-  border: 1px solid var(--color-line);
-  border-radius: 34px;
+  min-height: 504px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 30.6px;
   overflow: hidden;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px), var(--color-card);
-  background-size: 32px 32px;
+    linear-gradient(rgba(255, 255, 255, 0.025) 0.9px, transparent 0.9px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0.9px, transparent 0.9px), var(--color-card);
+  background-size: 28.8px 28.8px;
   transition:
     transform 0.35s ease,
     border-color 0.35s ease,
@@ -192,16 +193,16 @@ onMounted(() => {
 }
 
 .product-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-9px);
   border-color: var(--color-line-strong);
 }
 
 .product-card__top {
   position: absolute;
   z-index: 2;
-  top: 22px;
-  left: 22px;
-  right: 22px;
+  top: 19.8px;
+  left: 19.8px;
+  right: 19.8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -211,14 +212,14 @@ onMounted(() => {
 .product-card__top span,
 .product-card__top p {
   margin: 0;
-  font-size: 11px;
+  font-size: 9.9px;
   letter-spacing: 0.14em;
   color: var(--color-text-muted);
 }
 
 .product-card__image {
-  height: 340px;
-  padding: 58px 34px 26px;
+  height: 306px;
+  padding: 52.2px 30.6px 23.4px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -236,46 +237,55 @@ onMounted(() => {
 }
 
 .product-card:hover .product-card__image img {
-  transform: scale(1.06) translateY(-4px);
+  transform: scale(1.06) translateY(-3.6px);
 }
 
 .product-card__content {
-  padding: 28px;
+  padding: 25.2px;
   background: rgba(12, 15, 18, 0.72);
-  min-height: 164px;
+  min-height: 147.6px;
 }
 
 .product-card__content p {
-  margin: 0 0 12px;
+  margin: 0 0 10.8px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 9.9px;
   color: var(--color-text-muted);
 }
 
 .product-card__content h3 {
   margin: 0;
-  font-size: 30px;
+  font-size: 27px;
   letter-spacing: -0.04em;
 }
 
 .product-card__content span {
   display: block;
-  margin-top: 14px;
-  font-size: 15px;
+  margin-top: 12.6px;
+  font-size: 13.5px;
   line-height: 1.75;
   color: var(--color-text-soft);
 }
 
+.product-card__content strong {
+  display: block;
+  margin-top: 14.4px;
+  font-family: var(--font-mono);
+  font-size: 9.9px;
+  letter-spacing: 0.14em;
+  color: var(--color-accent);
+}
+
 .product-card__tags {
   position: absolute;
-  left: 28px;
-  right: 28px;
-  bottom: 22px;
+  left: 25.2px;
+  right: 25.2px;
+  bottom: 19.8px;
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 7.2px;
   opacity: 0;
-  transform: translateY(12px);
+  transform: translateY(10.8px);
   transition: 0.3s ease;
 }
 
@@ -285,30 +295,30 @@ onMounted(() => {
 }
 
 .product-card__tags span {
-  padding: 7px 11px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
+  padding: 6.3px 9.9px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 899.1px;
   background: rgba(7, 8, 9, 0.7);
-  font-size: 12px;
+  font-size: 10.8px;
   color: var(--color-text-soft);
 }
 
 .products__footer {
-  margin-top: 28px;
-  padding: 28px 32px;
+  margin-top: 25.2px;
+  padding: 25.2px 28.8px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 32px;
-  border: 1px solid var(--color-line);
-  border-radius: 30px;
+  gap: 28.8px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 27px;
   background: rgba(255, 255, 255, 0.025);
 }
 
 .products__footer strong {
   display: block;
-  margin-bottom: 8px;
-  font-size: 18px;
+  margin-bottom: 7.2px;
+  font-size: 16.2px;
 }
 
 .products__footer span {
@@ -319,14 +329,14 @@ onMounted(() => {
 
 .products__more {
   flex-shrink: 0;
-  height: 46px;
-  padding: 0 22px;
+  height: 41.4px;
+  padding: 0 19.8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid var(--color-line-strong);
-  border-radius: 999px;
-  font-size: 14px;
+  border: 0.9px solid var(--color-line-strong);
+  border-radius: 899.1px;
+  font-size: 12.6px;
   color: var(--color-text);
   transition: 0.25s ease;
 }
@@ -334,13 +344,13 @@ onMounted(() => {
 .products__more:hover {
   background: var(--color-text);
   color: #08090a;
-  transform: translateY(-2px);
+  transform: translateY(-1.8px);
 }
 
-@media (max-width: 1100px) {
+@media (max-width: 990px) {
   .products__header-row {
     grid-template-columns: 1fr;
-    gap: 24px;
+    gap: 21.6px;
   }
 
   .products__grid {
@@ -352,14 +362,14 @@ onMounted(() => {
   }
 
   .product-card__image {
-    height: 320px;
+    height: 288px;
   }
 
   .product-card__tags {
     position: static;
     opacity: 1;
     transform: none;
-    padding: 0 28px 24px;
+    padding: 0 25.2px 21.6px;
     background: rgba(12, 15, 18, 0.72);
   }
 

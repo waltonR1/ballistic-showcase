@@ -18,8 +18,8 @@
   --font-display: Inter, system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
 
-  --container: 1680px;
-  --page-gutter: clamp(20px, 4vw, 72px);
-  --radius-lg: 28px;
-  --radius-md: 18px;
+  --container: 1512px;
+  --page-gutter: clamp(18px, 4vw, 64.8px);
+  --radius-lg: 25.2px;
+  --radius-md: 16.2px;
 }

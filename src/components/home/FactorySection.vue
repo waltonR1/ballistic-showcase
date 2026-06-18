@@ -39,9 +39,8 @@ onMounted(() => {
       <div>
         <h2>生产能力与质量控制</h2>
         <span>
-          依托中国供应链合作方的生产与加工能力，结合法国团队的销售管理、客户沟通与资料对接，
-          为专业客户提供清晰、可追踪的产品展示与商务支持。
-        </span>
+          依托中国供应链合作方的生产与加工能力，结合法国团队的销售管理、客户沟通与资料对接，为专业客户提供清晰、可追踪的产品展示与商务支持。</span
+        >
       </div>
     </div>
 
@@ -104,17 +103,17 @@ onMounted(() => {
 .factory-section {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
-  padding: 120px 0;
+  padding: 108px 0;
 }
 
 .factory-section__header {
-  margin-bottom: 46px;
+  margin-bottom: 41.4px;
 }
 
 .factory-section__header > p {
-  margin: 0 0 16px;
+  margin: 0 0 14.4px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   letter-spacing: 0.22em;
   color: var(--color-accent);
 }
@@ -122,20 +121,20 @@ onMounted(() => {
 .factory-section__header > div {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 48px;
+  gap: 43.2px;
   align-items: end;
 }
 
 .factory-section__header h2 {
   margin: 0;
-  font-size: clamp(42px, 5vw, 72px);
+  font-size: clamp(37.8px, 5vw, 64.8px);
   line-height: 0.95;
   letter-spacing: -0.06em;
 }
 
 .factory-section__header span {
   display: block;
-  max-width: 700px;
+  max-width: 630px;
   line-height: 1.9;
   color: var(--color-text-soft);
 }
@@ -143,14 +142,14 @@ onMounted(() => {
 .factory-section__body {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
-  gap: 22px;
+  gap: 19.8px;
 }
 
 .factory-section__visual {
   position: relative;
-  min-height: 620px;
-  border: 1px solid var(--color-line);
-  border-radius: 38px;
+  min-height: 558px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 34.2px;
   overflow: hidden;
   background: var(--color-card);
 }
@@ -168,7 +167,7 @@ onMounted(() => {
 .factory-section__visual img {
   width: 100%;
   height: 100%;
-  min-height: 620px;
+  min-height: 558px;
   object-fit: cover;
   filter: contrast(1.04) saturate(0.82) brightness(0.82);
 }
@@ -176,39 +175,39 @@ onMounted(() => {
 .factory-section__visual-label {
   position: absolute;
   z-index: 2;
-  left: 28px;
-  bottom: 28px;
-  padding: 16px 18px;
-  border: 1px solid var(--color-line);
-  border-radius: 18px;
+  left: 25.2px;
+  bottom: 25.2px;
+  padding: 14.4px 16.2px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 16.2px;
   background: rgba(8, 9, 10, 0.72);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(12.6px);
 }
 
 .factory-section__visual-label span {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 5.4px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.18em;
   color: var(--color-text-muted);
 }
 
 .factory-section__visual-label strong {
-  font-size: 14px;
+  font-size: 12.6px;
   color: var(--color-text);
 }
 
 .factory-section__cards {
   display: grid;
-  gap: 18px;
+  gap: 16.2px;
 }
 
 .factory-card {
-  min-height: 194px;
-  padding: 30px;
-  border: 1px solid var(--color-line);
-  border-radius: 30px;
+  min-height: 174.6px;
+  padding: 27px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 27px;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.08), transparent 38%),
     var(--color-card);
@@ -216,13 +215,13 @@ onMounted(() => {
 
 .factory-card span {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   color: var(--color-accent);
 }
 
 .factory-card h3 {
-  margin: 34px 0 12px;
-  font-size: 26px;
+  margin: 30.6px 0 10.8px;
+  font-size: 23.4px;
   letter-spacing: -0.04em;
 }
 
@@ -233,18 +232,18 @@ onMounted(() => {
 }
 
 .factory-section__metrics {
-  margin-top: 22px;
+  margin-top: 19.8px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border: 1px solid var(--color-line);
-  border-radius: 30px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 27px;
   overflow: hidden;
   background: rgba(255, 255, 255, 0.025);
 }
 
 .factory-section__metrics div {
-  padding: 26px 28px;
-  border-right: 1px solid var(--color-line);
+  padding: 23.4px 25.2px;
+  border-right: 0.9px solid var(--color-line);
 }
 
 .factory-section__metrics div:last-child {
@@ -253,19 +252,19 @@ onMounted(() => {
 
 .factory-section__metrics strong {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7.2px;
   font-family: var(--font-mono);
-  font-size: 18px;
+  font-size: 16.2px;
   letter-spacing: 0.12em;
   color: var(--color-text);
 }
 
 .factory-section__metrics span {
   color: var(--color-text-muted);
-  font-size: 14px;
+  font-size: 12.6px;
 }
 
-@media (max-width: 980px) {
+@media (max-width: 882px) {
   .factory-section__header > div,
   .factory-section__body {
     grid-template-columns: 1fr;
@@ -273,7 +272,7 @@ onMounted(() => {
 
   .factory-section__visual,
   .factory-section__visual img {
-    min-height: 420px;
+    min-height: 378px;
   }
 
   .factory-section__metrics {
@@ -286,18 +285,18 @@ onMounted(() => {
 
   .factory-section__metrics div:nth-child(1),
   .factory-section__metrics div:nth-child(2) {
-    border-bottom: 1px solid var(--color-line);
+    border-bottom: 0.9px solid var(--color-line);
   }
 }
 
-@media (max-width: 620px) {
+@media (max-width: 558px) {
   .factory-section__metrics {
     grid-template-columns: 1fr;
   }
 
   .factory-section__metrics div {
     border-right: none;
-    border-bottom: 1px solid var(--color-line);
+    border-bottom: 0.9px solid var(--color-line);
   }
 
   .factory-section__metrics div:last-child {

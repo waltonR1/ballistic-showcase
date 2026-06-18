@@ -38,9 +38,8 @@ onMounted(() => {
       <div>
         <h2>申请技术资料或产品咨询</h2>
         <span>
-          面向法国及欧洲专业客户，提供产品目录、基础参数、图片资料、规格文件与商务沟通支持。
-          具体防护等级、认证资料与报价信息建议通过正式联系确认。
-        </span>
+          面向法国及欧洲专业客户，提供产品目录、基础参数、图片资料、规格文件与商务沟通支持。具体防护等级、认证资料与报价信息建议通过正式联系确认。</span
+        >
       </div>
     </div>
 
@@ -114,7 +113,7 @@ onMounted(() => {
           </p>
         </div>
 
-        <a class="contact-form__button" href="mailto:contact@example.com"> 通过邮件发送咨询 </a>
+        <a class="contact-form__button" href="mailto:contact@example.com"> 通过邮件发送咨询</a>
       </form>
     </div>
   </section>
@@ -124,17 +123,17 @@ onMounted(() => {
 .contact-section {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
-  padding: 120px 0;
+  padding: 108px 0;
 }
 
 .contact-section__header {
-  margin-bottom: 46px;
+  margin-bottom: 41.4px;
 }
 
 .contact-section__header > p {
-  margin: 0 0 16px;
+  margin: 0 0 14.4px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   letter-spacing: 0.22em;
   color: var(--color-accent);
 }
@@ -142,20 +141,20 @@ onMounted(() => {
 .contact-section__header > div {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 48px;
+  gap: 43.2px;
   align-items: end;
 }
 
 .contact-section__header h2 {
   margin: 0;
-  font-size: clamp(42px, 5vw, 72px);
+  font-size: clamp(37.8px, 5vw, 64.8px);
   line-height: 0.95;
   letter-spacing: -0.06em;
 }
 
 .contact-section__header span {
   display: block;
-  max-width: 720px;
+  max-width: 648px;
   line-height: 1.9;
   color: var(--color-text-soft);
 }
@@ -163,44 +162,44 @@ onMounted(() => {
 .contact-section__body {
   display: grid;
   grid-template-columns: 0.92fr 1.08fr;
-  gap: 22px;
+  gap: 19.8px;
 }
 
 .contact-section__info {
   display: grid;
-  gap: 22px;
+  gap: 19.8px;
 }
 
 .contact-section__panel,
 .contact-form {
-  border: 1px solid var(--color-line);
-  border-radius: 36px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 32.4px;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.1), transparent 36%),
     var(--color-card);
 }
 
 .contact-section__panel {
-  padding: 38px;
+  padding: 34.2px;
 }
 
 .contact-section__panel > span {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   letter-spacing: 0.2em;
   color: var(--color-accent);
 }
 
 .contact-section__panel h3 {
-  margin: 28px 0 24px;
-  font-size: 32px;
+  margin: 25.2px 0 21.6px;
+  font-size: 28.8px;
   line-height: 1.1;
   letter-spacing: -0.05em;
 }
 
 .contact-section__panel ul {
   display: grid;
-  gap: 16px;
+  gap: 14.4px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -208,7 +207,7 @@ onMounted(() => {
 
 .contact-section__panel li {
   position: relative;
-  padding-left: 22px;
+  padding-left: 19.8px;
   line-height: 1.75;
   color: var(--color-text-soft);
 }
@@ -218,29 +217,29 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 0.75em;
-  width: 7px;
-  height: 7px;
-  border-radius: 999px;
+  width: 6.3px;
+  height: 6.3px;
+  border-radius: 899.1px;
   background: var(--color-accent);
 }
 
 .contact-section__meta {
   display: grid;
-  gap: 12px;
+  gap: 10.8px;
 }
 
 .contact-section__meta div {
-  padding: 22px 24px;
-  border: 1px solid var(--color-line);
-  border-radius: 24px;
+  padding: 19.8px 21.6px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 21.6px;
   background: rgba(255, 255, 255, 0.025);
 }
 
 .contact-section__meta strong {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7.2px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 9.9px;
   letter-spacing: 0.16em;
   color: var(--color-text-muted);
 }
@@ -252,23 +251,23 @@ onMounted(() => {
 }
 
 .contact-form {
-  padding: 38px;
+  padding: 34.2px;
 }
 
 .contact-form__row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 14.4px;
 }
 
 .contact-form label {
   display: grid;
-  gap: 10px;
-  margin-bottom: 18px;
+  gap: 9px;
+  margin-bottom: 16.2px;
 }
 
 .contact-form label span {
-  font-size: 13px;
+  font-size: 11.7px;
   color: var(--color-text-soft);
 }
 
@@ -276,25 +275,25 @@ onMounted(() => {
 .contact-form select,
 .contact-form textarea {
   width: 100%;
-  border: 1px solid var(--color-line);
-  border-radius: 18px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 16.2px;
   outline: none;
   background: rgba(7, 8, 9, 0.62);
   color: var(--color-text);
   font-family: inherit;
-  font-size: 14px;
+  font-size: 12.6px;
   transition: 0.25s ease;
 }
 
 .contact-form input,
 .contact-form select {
-  height: 52px;
-  padding: 0 16px;
+  height: 46.8px;
+  padding: 0 14.4px;
 }
 
 .contact-form textarea {
-  min-height: 150px;
-  padding: 16px;
+  min-height: 135px;
+  padding: 14.4px;
   resize: vertical;
 }
 
@@ -311,18 +310,18 @@ onMounted(() => {
 }
 
 .contact-form__notice {
-  margin-top: 8px;
-  padding: 18px;
-  border: 1px solid var(--color-line);
-  border-radius: 22px;
+  margin-top: 7.2px;
+  padding: 16.2px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 19.8px;
   background: rgba(255, 255, 255, 0.025);
 }
 
 .contact-form__notice span {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7.2px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 9.9px;
   letter-spacing: 0.16em;
   color: var(--color-accent);
 }
@@ -331,42 +330,42 @@ onMounted(() => {
   margin: 0;
   line-height: 1.7;
   color: var(--color-text-muted);
-  font-size: 13px;
+  font-size: 11.7px;
 }
 
 .contact-form__button {
-  margin-top: 24px;
+  margin-top: 21.6px;
   width: 100%;
-  height: 54px;
+  height: 48.6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
+  border-radius: 899.1px;
   background: var(--color-text);
   color: #08090a;
-  font-size: 14px;
+  font-size: 12.6px;
   transition: 0.25s ease;
 }
 
 .contact-form__button:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1.8px);
 }
 
-@media (max-width: 980px) {
+@media (max-width: 882px) {
   .contact-section__header > div,
   .contact-section__body {
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 612px) {
   .contact-form__row {
     grid-template-columns: 1fr;
   }
 
   .contact-section__panel,
   .contact-form {
-    padding: 28px;
+    padding: 25.2px;
   }
 }
 </style>

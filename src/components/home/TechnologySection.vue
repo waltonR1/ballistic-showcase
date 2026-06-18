@@ -8,37 +8,37 @@ const layers = [
   {
     index: '01',
     title: '外层面料',
-    desc: '用于装备外部耐磨、防污与基础结构保护。',
+    desc: '用于装备外部耐磨、防污与基础结构保护',
   },
   {
     index: '02',
     title: '软质防护层',
-    desc: '可根据产品需求采用芳纶、UHMWPE 等软质防护材料。',
+    desc: '可根据产品需求采用芳纶、UHMWPE 等软质防护材料',
   },
   {
     index: '03',
     title: '硬质防护模块',
-    desc: '适用于防弹插板、盾牌等硬质防护组件。',
+    desc: '适用于防弹插板、盾牌等硬质防护组件',
   },
   {
     index: '04',
     title: '缓冲与贴合结构',
-    desc: '提升穿戴稳定性、舒适性与装备系统适配能力。',
+    desc: '提升穿戴稳定性、舒适性与装备系统适配能力',
   },
 ]
 
 const features = [
   {
     title: '材料选择',
-    desc: '根据防护场景、重量要求与产品结构，对接不同材料方案。',
+    desc: '根据防护场景、重量要求与产品结构，对接不同材料方案',
   },
   {
     title: '结构配置',
-    desc: '支持背心、头盔、插板、盾牌及软质组件等多类型产品资料整理。',
+    desc: '支持背心、头盔、插板、盾牌及软质组件等多类型产品资料整理',
   },
   {
     title: '文件支持',
-    desc: '可根据专业客户需求申请参数表、规格说明、测试信息及产品图片资料。',
+    desc: '可根据专业客户需求申请参数表、规格说明、测试信息及产品图片资料',
   },
 ]
 
@@ -97,9 +97,8 @@ onMounted(() => {
       <div>
         <h2>材料与防护技术</h2>
         <span>
-          围绕弹道防护装备的材料结构、产品配置与技术资料对接，建立清晰、克制、专业的展示逻辑。
-          具体防护等级、测试标准与认证文件以正式资料为准。
-        </span>
+          围绕弹道防护装备的材料结构、产品配置与技术资料对接，建立清晰、克制、专业的展示逻辑。具体防护等级、测试标准与认证文件以正式资料为准。</span
+        >
       </div>
     </div>
 
@@ -163,9 +162,8 @@ onMounted(() => {
       </div>
 
       <span>
-        网站仅展示产品类别与基础能力。具体防护等级、测试文件、认证资料、规格参数与报价信息，
-        应通过正式商务沟通和资料审核后确认。
-      </span>
+        网站仅展示产品类别与基础能力。具体防护等级、测试文件、认证资料、规格参数与报价信息，应通过正式商务沟通和资料审核后确认。</span
+      >
     </div>
   </section>
 </template>
@@ -174,18 +172,18 @@ onMounted(() => {
 .technology-section {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
-  padding: 120px 0;
+  padding: 108px 0;
 }
 
 .technology-section__header {
-  margin-bottom: 46px;
+  margin-bottom: 41.4px;
 }
 
 .technology-section__header > p,
 .technology-section__notice p {
-  margin: 0 0 16px;
+  margin: 0 0 14.4px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   letter-spacing: 0.22em;
   color: var(--color-accent);
 }
@@ -193,20 +191,20 @@ onMounted(() => {
 .technology-section__header > div {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 48px;
+  gap: 43.2px;
   align-items: end;
 }
 
 .technology-section__header h2 {
   margin: 0;
-  font-size: clamp(42px, 5vw, 72px);
+  font-size: clamp(37.8px, 5vw, 64.8px);
   line-height: 0.95;
   letter-spacing: -0.06em;
 }
 
 .technology-section__header span {
   display: block;
-  max-width: 760px;
+  max-width: 684px;
   line-height: 1.9;
   color: var(--color-text-soft);
 }
@@ -214,26 +212,26 @@ onMounted(() => {
 .technology-section__body {
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
-  gap: 22px;
+  gap: 19.8px;
 }
 
 .technology-section__visual {
-  min-height: 640px;
-  padding: 34px;
+  min-height: 576px;
+  padding: 30.6px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border: 1px solid var(--color-line);
-  border-radius: 38px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 34.2px;
   overflow: hidden;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+    linear-gradient(rgba(255, 255, 255, 0.028) 0.9px, transparent 0.9px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 0.9px, transparent 0.9px),
     radial-gradient(circle at 50% 26%, rgba(210, 220, 235, 0.13), transparent 42%),
     var(--color-card);
   background-size:
-    34px 34px,
-    34px 34px,
+    30.6px 30.6px,
+    30.6px 30.6px,
     auto,
     auto;
 }
@@ -241,7 +239,7 @@ onMounted(() => {
 .tech-plate {
   position: relative;
   flex: 1;
-  min-height: 430px;
+  min-height: 387px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -249,44 +247,44 @@ onMounted(() => {
 
 .tech-plate__glow {
   position: absolute;
-  width: 380px;
-  height: 380px;
-  border-radius: 999px;
+  width: 342px;
+  height: 342px;
+  border-radius: 899.1px;
   background: rgba(210, 220, 235, 0.1);
-  filter: blur(40px);
+  filter: blur(36px);
 }
 
 .tech-plate__core {
   position: relative;
   z-index: 2;
-  width: min(68%, 360px);
+  width: min(68%, 324px);
   aspect-ratio: 0.72;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 26px;
-  border: 1px solid var(--color-line-strong);
-  border-radius: 28px;
+  padding: 23.4px;
+  border: 0.9px solid var(--color-line-strong);
+  border-radius: 25.2px;
   background:
     linear-gradient(145deg, rgba(255, 255, 255, 0.12), transparent 30%),
     linear-gradient(180deg, #1c2026 0%, #0b0d10 100%);
   box-shadow:
-    0 40px 90px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 36px 81px rgba(0, 0, 0, 0.35),
+    inset 0 0.9px 0 rgba(255, 255, 255, 0.08);
   transform: rotate(-7deg);
 }
 
 .tech-plate__core span {
-  margin-bottom: 8px;
+  margin-bottom: 7.2px;
   font-family: var(--font-mono);
-  font-size: 11px;
+  font-size: 9.9px;
   letter-spacing: 0.18em;
   color: var(--color-text-muted);
 }
 
 .tech-plate__core strong {
-  max-width: 220px;
-  font-size: 28px;
+  max-width: 198px;
+  font-size: 25.2px;
   line-height: 1.05;
   letter-spacing: -0.05em;
 }
@@ -295,7 +293,7 @@ onMounted(() => {
   position: absolute;
   z-index: 1;
   width: 58%;
-  height: 1px;
+  height: 0.9px;
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.22), transparent);
 }
 
@@ -317,15 +315,15 @@ onMounted(() => {
 .technology-section__metrics {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  border: 1px solid var(--color-line);
-  border-radius: 26px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 23.4px;
   overflow: hidden;
   background: rgba(8, 9, 10, 0.56);
 }
 
 .technology-section__metrics div {
-  padding: 22px;
-  border-right: 1px solid var(--color-line);
+  padding: 19.8px;
+  border-right: 0.9px solid var(--color-line);
 }
 
 .technology-section__metrics div:last-child {
@@ -334,32 +332,32 @@ onMounted(() => {
 
 .technology-section__metrics strong {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 7.2px;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 12.6px;
   letter-spacing: 0.12em;
   color: var(--color-text);
 }
 
 .technology-section__metrics span {
-  font-size: 13px;
+  font-size: 11.7px;
   color: var(--color-text-muted);
 }
 
 .technology-section__layers {
   display: grid;
-  gap: 16px;
+  gap: 14.4px;
 }
 
 .layer-card {
-  min-height: 148px;
-  padding: 28px;
+  min-height: 133.2px;
+  padding: 25.2px;
   display: grid;
-  grid-template-columns: 52px 1fr;
-  gap: 22px;
+  grid-template-columns: 46.8px 1fr;
+  gap: 19.8px;
   align-items: start;
-  border: 1px solid var(--color-line);
-  border-radius: 30px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 27px;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.08), transparent 38%),
     var(--color-card);
@@ -367,66 +365,66 @@ onMounted(() => {
 
 .layer-card span {
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   color: var(--color-accent);
 }
 
 .layer-card h3 {
   margin: 0;
-  font-size: 26px;
+  font-size: 23.4px;
   letter-spacing: -0.04em;
 }
 
 .layer-card p {
-  margin: 12px 0 0;
+  margin: 10.8px 0 0;
   line-height: 1.75;
   color: var(--color-text-soft);
 }
 
 .technology-section__features {
-  margin-top: 22px;
+  margin-top: 19.8px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 22px;
+  gap: 19.8px;
 }
 
 .tech-feature {
-  min-height: 240px;
-  padding: 30px;
-  border: 1px solid var(--color-line);
-  border-radius: 30px;
+  min-height: 216px;
+  padding: 27px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 27px;
   background: rgba(255, 255, 255, 0.025);
 }
 
 .tech-feature > span {
   display: block;
-  width: 42px;
-  height: 2px;
-  margin-bottom: 56px;
+  width: 37.8px;
+  height: 1.8px;
+  margin-bottom: 50.4px;
   background: var(--color-accent);
 }
 
 .tech-feature h3 {
   margin: 0;
-  font-size: 26px;
+  font-size: 23.4px;
   letter-spacing: -0.04em;
 }
 
 .tech-feature p {
-  margin: 14px 0 0;
+  margin: 12.6px 0 0;
   line-height: 1.75;
   color: var(--color-text-soft);
 }
 
 .technology-section__notice {
-  margin-top: 22px;
-  padding: 36px;
+  margin-top: 19.8px;
+  padding: 32.4px;
   display: grid;
   grid-template-columns: 0.85fr 1.15fr;
-  gap: 42px;
+  gap: 37.8px;
   align-items: center;
-  border: 1px solid var(--color-line);
-  border-radius: 32px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 28.8px;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.08), transparent 34%),
     rgba(255, 255, 255, 0.025);
@@ -434,7 +432,7 @@ onMounted(() => {
 
 .technology-section__notice h3 {
   margin: 0;
-  font-size: 34px;
+  font-size: 30.6px;
   letter-spacing: -0.05em;
 }
 
@@ -443,7 +441,7 @@ onMounted(() => {
   color: var(--color-text-soft);
 }
 
-@media (max-width: 980px) {
+@media (max-width: 882px) {
   .technology-section__header > div,
   .technology-section__body,
   .technology-section__features,
@@ -452,18 +450,18 @@ onMounted(() => {
   }
 
   .technology-section__visual {
-    min-height: 520px;
+    min-height: 468px;
   }
 }
 
-@media (max-width: 680px) {
+@media (max-width: 612px) {
   .technology-section__metrics {
     grid-template-columns: 1fr;
   }
 
   .technology-section__metrics div {
     border-right: none;
-    border-bottom: 1px solid var(--color-line);
+    border-bottom: 0.9px solid var(--color-line);
   }
 
   .technology-section__metrics div:last-child {

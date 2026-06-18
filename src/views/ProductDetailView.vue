@@ -1,16 +1,29 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import gsap from 'gsap'
-import { getProductById } from '@/data/products'
+import { getProductVariant } from '@/data/products'
 import { assetUrl } from '@/utils/asset'
 
 const route = useRoute()
 const pageRef = ref<HTMLElement | null>(null)
+const activeImage = ref('')
 
-const product = computed(() => {
-  return getProductById(String(route.params.id))
+const productResult = computed(() => {
+  return getProductVariant(String(route.params.seriesId), String(route.params.variantId))
 })
+
+const series = computed(() => productResult.value?.series)
+const variant = computed(() => productResult.value?.variant)
+const gallery = computed(() => variant.value?.gallery ?? [])
+
+watch(
+  gallery,
+  (images) => {
+    activeImage.value = images[0] ?? ''
+  },
+  { immediate: true },
+)
 
 onMounted(() => {
   if (!pageRef.value) return
@@ -27,7 +40,7 @@ onMounted(() => {
 
 <template>
   <main ref="pageRef" class="product-detail">
-    <template v-if="product">
+    <template v-if="series && variant">
       <section class="product-hero">
         <div class="product-hero__content detail-animate">
           <div class="product-hero__breadcrumb">
@@ -35,41 +48,52 @@ onMounted(() => {
             <span>/</span>
             <RouterLink to="/products">产品系列</RouterLink>
             <span>/</span>
-            <strong>{{ product.nameZh }}</strong>
+            <RouterLink :to="`/products/${series.id}`">{{ series.nameZh }}</RouterLink>
+            <span>/</span>
+            <strong>{{ variant.nameZh }}</strong>
           </div>
 
-          <p class="product-hero__eyebrow">{{ product.eyebrow }}</p>
+          <p class="product-hero__eyebrow">{{ series.eyebrow }}</p>
 
           <h1>
-            {{ product.nameZh }}
-            <span>{{ product.nameFr }}</span>
+            {{ variant.nameZh }}
+            <span>{{ variant.nameFr || series.nameFr }}</span>
           </h1>
 
           <p class="product-hero__description">
-            {{ product.detailZh }}
+            {{ variant.descriptionZh }}
           </p>
 
           <div class="product-hero__tags">
-            <span v-for="tag in product.tags" :key="tag">{{ tag }}</span>
+            <span v-for="tag in variant.tags" :key="tag">{{ tag }}</span>
           </div>
 
           <div class="product-hero__actions">
             <a href="mailto:contact@example.com">申请技术资料</a>
-            <RouterLink to="/products">查看全部产品</RouterLink>
+            <RouterLink :to="`/products/${series.id}`">返回系列产品</RouterLink>
           </div>
         </div>
 
-        <div class="product-hero__visual detail-animate">
-          <div class="product-hero__visual-top">
-            <span>PRODUCT VISUAL</span>
-            <strong>{{ product.eyebrow }}</strong>
+        <div class="product-gallery detail-animate">
+          <div class="product-gallery__stage">
+            <div class="product-gallery__top">
+              <span>PRODUCT VISUAL</span>
+              <strong>{{ gallery.length }} IMAGES</strong>
+            </div>
+
+            <img v-if="activeImage" :src="assetUrl(activeImage)" :alt="variant.nameZh" />
           </div>
 
-          <img :src="assetUrl(product.image)" :alt="product.nameZh" />
-
-          <div class="product-hero__visual-bottom">
-            <span>DOCUMENTATION</span>
-            <strong>Available on request</strong>
+          <div v-if="gallery.length > 1" class="product-gallery__thumbs">
+            <button
+              v-for="image in gallery"
+              :key="image"
+              type="button"
+              :class="{ 'product-gallery__thumb--active': image === activeImage }"
+              @click="activeImage = image"
+            >
+              <img :src="assetUrl(image)" :alt="variant.nameZh" />
+            </button>
           </div>
         </div>
       </section>
@@ -80,7 +104,11 @@ onMounted(() => {
           <h2>基础参数</h2>
 
           <div class="spec-list">
-            <div v-for="spec in product.specs" :key="spec.label" class="spec-list__item">
+            <div
+              v-for="spec in variant.specs?.length ? variant.specs : series.specs"
+              :key="spec.label"
+              class="spec-list__item"
+            >
               <span>{{ spec.label }}</span>
               <strong>{{ spec.value }}</strong>
             </div>
@@ -88,11 +116,11 @@ onMounted(() => {
         </article>
 
         <article class="overview-card detail-animate">
-          <p>APPLICATIONS</p>
-          <h2>应用场景</h2>
+          <p>SERIES</p>
+          <h2>{{ series.nameZh }}</h2>
 
           <div class="application-list">
-            <span v-for="item in product.applications" :key="item">
+            <span v-for="item in series.applications" :key="item">
               {{ item }}
             </span>
           </div>
@@ -106,16 +134,15 @@ onMounted(() => {
         </div>
 
         <span>
-          页面仅用于产品展示与初步资料说明。具体防护等级、材料结构、测试文件、认证资料与报价信息，
-          建议通过正式商务沟通确认。
-        </span>
+          页面仅用于产品展示与初步资料说明。具体防护等级、材料结构、测试文件、认证资料与报价信息，建议通过正式商务沟通确认。</span
+        >
       </section>
 
       <section class="product-cta detail-animate">
         <div>
           <p>REQUEST INFORMATION</p>
           <h2>需要该产品的技术资料？</h2>
-          <span> 可通过邮件联系销售团队，申请产品参数、图片资料、规格文件或进一步商务沟通。 </span>
+          <span>可通过邮件联系销售团队，申请产品参数、图片资料、规格文件或进一步商务沟通。</span>
         </div>
 
         <a href="mailto:contact@example.com">发送咨询邮件</a>
@@ -124,32 +151,39 @@ onMounted(() => {
 
     <section v-else class="not-found">
       <h1>产品不存在</h1>
-      <RouterLink to="/products">返回产品列表</RouterLink>
+      <RouterLink to="/products">返回产品系列</RouterLink>
     </section>
   </main>
 </template>
 
 <style scoped>
 .product-detail {
-  padding-top: 120px;
+  padding-top: 108px;
+}
+
+.product-hero,
+.product-overview,
+.product-notice,
+.product-cta,
+.not-found {
+  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
+  margin-inline: auto;
 }
 
 .product-hero {
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
-  min-height: calc(100vh - 120px);
-  margin: 0 auto;
+  min-height: calc(100vh - 108px);
   display: grid;
-  grid-template-columns: 0.92fr 1.08fr;
-  gap: 64px;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 57.6px;
   align-items: center;
 }
 
 .product-hero__breadcrumb {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 34px;
-  font-size: 13px;
+  gap: 7.2px;
+  margin-bottom: 30.6px;
+  font-size: 11.7px;
   color: var(--color-text-muted);
 }
 
@@ -168,68 +202,70 @@ onMounted(() => {
 }
 
 .product-hero__eyebrow {
-  margin: 0 0 18px;
+  margin: 0 0 16.2px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   letter-spacing: 0.24em;
   color: var(--color-accent);
 }
 
 .product-hero h1 {
   margin: 0;
-  font-size: clamp(56px, 7vw, 96px);
+  font-size: clamp(50.4px, 7vw, 93.6px);
   line-height: 0.92;
   letter-spacing: -0.07em;
 }
 
 .product-hero h1 span {
   display: block;
-  margin-top: 18px;
+  margin-top: 16.2px;
   font-family: var(--font-mono);
-  font-size: 14px;
+  font-size: 12.6px;
   letter-spacing: 0.14em;
   color: var(--color-text-muted);
 }
 
 .product-hero__description {
-  max-width: 620px;
-  margin: 32px 0 0;
-  font-size: 17px;
+  max-width: 594px;
+  margin: 28.8px 0 0;
+  font-size: 15.3px;
   line-height: 1.9;
   color: var(--color-text-soft);
 }
 
-.product-hero__tags {
+.product-hero__tags,
+.application-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 30px;
+  gap: 9px;
+  margin-top: 27px;
 }
 
-.product-hero__tags span {
-  padding: 8px 12px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
+.product-hero__tags span,
+.application-list span {
+  padding: 7.2px 10.8px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 899.1px;
   background: rgba(255, 255, 255, 0.03);
   color: var(--color-text-soft);
-  font-size: 13px;
+  font-size: 11.7px;
 }
 
 .product-hero__actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 36px;
+  gap: 12.6px;
+  margin-top: 32.4px;
 }
 
 .product-hero__actions a {
-  height: 48px;
-  padding: 0 22px;
+  height: 43.2px;
+  padding: 0 19.8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
-  font-size: 14px;
+  border-radius: 899.1px;
+  font-size: 12.6px;
   transition: 0.25s ease;
 }
 
@@ -239,89 +275,111 @@ onMounted(() => {
 }
 
 .product-hero__actions a:last-child {
-  border: 1px solid var(--color-line-strong);
+  border: 0.9px solid var(--color-line-strong);
   color: var(--color-text);
 }
 
 .product-hero__actions a:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1.8px);
 }
 
-.product-hero__visual {
+.product-gallery {
+  display: grid;
+  gap: 12.6px;
+}
+
+.product-gallery__stage {
   position: relative;
-  min-height: 620px;
-  border: 1px solid var(--color-line);
-  border-radius: 40px;
-  overflow: hidden;
-  background:
-    linear-gradient(rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
-    radial-gradient(circle at center, rgba(210, 220, 235, 0.14), transparent 50%), #101317;
-  background-size:
-    34px 34px,
-    34px 34px,
-    auto,
-    auto;
+  min-height: 576px;
+  padding: 55.8px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 0.9px solid var(--color-line);
+  border-radius: 36px;
+  overflow: hidden;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.028) 0.9px, transparent 0.9px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.028) 0.9px, transparent 0.9px),
+    radial-gradient(circle at center, rgba(210, 220, 235, 0.14), transparent 50%), #101317;
+  background-size:
+    30.6px 30.6px,
+    30.6px 30.6px,
+    auto,
+    auto;
 }
 
-.product-hero__visual img {
-  width: 72%;
-  max-height: 520px;
+.product-gallery__stage img {
+  max-width: 78%;
+  max-height: 468px;
   object-fit: contain;
   filter: contrast(1.06) saturate(0.9);
 }
 
-.product-hero__visual-top,
-.product-hero__visual-bottom {
+.product-gallery__top {
   position: absolute;
-  padding: 14px 16px;
-  border: 1px solid var(--color-line);
-  border-radius: 18px;
+  top: 21.6px;
+  left: 21.6px;
+  padding: 12.6px 14.4px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 16.2px;
   background: rgba(8, 9, 10, 0.72);
-  backdrop-filter: blur(14px);
+  backdrop-filter: blur(12.6px);
 }
 
-.product-hero__visual-top {
-  top: 24px;
-  left: 24px;
-}
-
-.product-hero__visual-bottom {
-  right: 24px;
-  bottom: 24px;
-}
-
-.product-hero__visual-top span,
-.product-hero__visual-bottom span {
+.product-gallery__top span {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 5.4px;
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 9px;
   letter-spacing: 0.18em;
   color: var(--color-text-muted);
 }
 
-.product-hero__visual-top strong,
-.product-hero__visual-bottom strong {
-  font-size: 13px;
+.product-gallery__top strong {
+  font-size: 11.7px;
   color: var(--color-text);
 }
 
+.product-gallery__thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(82.8px, 1fr));
+  gap: 9px;
+}
+
+.product-gallery__thumbs button {
+  height: 82.8px;
+  padding: 9px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 16.2px;
+  background: rgba(255, 255, 255, 0.025);
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.product-gallery__thumbs button:hover,
+.product-gallery__thumb--active {
+  border-color: var(--color-line-strong);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.product-gallery__thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .product-overview {
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
-  margin: 80px auto 0;
+  margin-top: 72px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
-  gap: 20px;
+  gap: 18px;
 }
 
 .overview-card {
-  padding: 38px;
-  border: 1px solid var(--color-line);
-  border-radius: 34px;
+  padding: 34.2px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 30.6px;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.08), transparent 34%),
     var(--color-card);
@@ -330,9 +388,9 @@ onMounted(() => {
 .overview-card > p,
 .product-notice p,
 .product-cta p {
-  margin: 0 0 14px;
+  margin: 0 0 12.6px;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10.8px;
   letter-spacing: 0.22em;
   color: var(--color-accent);
 }
@@ -341,21 +399,21 @@ onMounted(() => {
 .product-notice h2,
 .product-cta h2 {
   margin: 0;
-  font-size: clamp(32px, 4vw, 52px);
+  font-size: clamp(28.8px, 4vw, 46.8px);
   line-height: 1;
   letter-spacing: -0.06em;
 }
 
 .spec-list {
-  margin-top: 34px;
+  margin-top: 30.6px;
 }
 
 .spec-list__item {
   display: flex;
   justify-content: space-between;
-  gap: 28px;
-  padding: 20px 0;
-  border-bottom: 1px solid var(--color-line);
+  gap: 25.2px;
+  padding: 18px 0;
+  border-bottom: 0.9px solid var(--color-line);
 }
 
 .spec-list__item:last-child {
@@ -372,31 +430,15 @@ onMounted(() => {
   color: var(--color-text);
 }
 
-.application-list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 34px;
-}
-
-.application-list span {
-  padding: 12px 16px;
-  border: 1px solid var(--color-line);
-  border-radius: 999px;
-  color: var(--color-text-soft);
-  background: rgba(255, 255, 255, 0.025);
-}
-
 .product-notice {
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
-  margin: 20px auto 0;
-  padding: 38px;
+  margin-top: 18px;
+  padding: 34.2px;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 40px;
+  gap: 36px;
   align-items: center;
-  border: 1px solid var(--color-line);
-  border-radius: 34px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 30.6px;
   background: rgba(255, 255, 255, 0.025);
 }
 
@@ -406,15 +448,15 @@ onMounted(() => {
 }
 
 .product-cta {
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
-  margin: 80px auto 120px;
-  padding: 56px;
+  margin-top: 72px;
+  margin-bottom: 108px;
+  padding: 50.4px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 48px;
-  border: 1px solid var(--color-line);
-  border-radius: 38px;
+  gap: 43.2px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 34.2px;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.12), transparent 36%),
     var(--color-card);
@@ -422,44 +464,43 @@ onMounted(() => {
 
 .product-cta span {
   display: block;
-  max-width: 680px;
-  margin-top: 18px;
+  max-width: 612px;
+  margin-top: 16.2px;
   line-height: 1.8;
   color: var(--color-text-soft);
 }
 
 .product-cta a {
   flex-shrink: 0;
-  height: 50px;
-  padding: 0 24px;
+  height: 45px;
+  padding: 0 21.6px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 999px;
+  border-radius: 899.1px;
   background: var(--color-text);
   color: #08090a;
-  font-size: 14px;
+  font-size: 12.6px;
   transition: 0.25s ease;
 }
 
 .product-cta a:hover {
-  transform: translateY(-2px);
+  transform: translateY(-1.8px);
 }
 
 .not-found {
-  width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
-  margin: 160px auto;
+  margin-top: 144px;
 }
 
 .not-found h1 {
-  font-size: 56px;
+  font-size: 50.4px;
 }
 
 .not-found a {
   color: var(--color-accent);
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1062px) {
   .product-hero,
   .product-overview,
   .product-notice {
@@ -467,16 +508,39 @@ onMounted(() => {
   }
 
   .product-hero {
-    gap: 40px;
+    gap: 36px;
   }
 
-  .product-hero__visual {
-    min-height: 420px;
+  .product-gallery__stage {
+    min-height: 414px;
   }
 
   .product-cta {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 612px) {
+  .product-gallery__stage {
+    min-height: 324px;
+    padding: 37.8px 23.4px 25.2px;
+    border-radius: 25.2px;
+  }
+
+  .product-gallery__stage img {
+    max-width: 90%;
+    max-height: 252px;
+  }
+
+  .product-gallery__thumbs {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-notice,
+  .product-cta,
+  .overview-card {
+    padding: 25.2px;
   }
 }
 </style>
