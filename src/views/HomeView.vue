@@ -1,9 +1,21 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import HeroSection from '@/components/home/HeroSection.vue'
+import FeaturedProducts from '@/components/home/FeaturedProducts.vue'
+import FactorySection from '@/components/home/FactorySection.vue'
+import TechnologySection from '@/components/home/TechnologySection.vue'
+import FranceManagementSection from '@/components/home/FranceManagementSection.vue'
+import ContactSection from '@/components/home/ContactSection.vue'
 </script>
 
 <template>
   <main>
-    <TheWelcome />
+    <HeroSection />
+    <FeaturedProducts />
+    <FactorySection />
+    <TechnologySection />
+    <FranceManagementSection />
+    <ContactSection />
   </main>
 </template>
+
+<style scoped></style>

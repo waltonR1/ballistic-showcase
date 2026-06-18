@@ -1,0 +1,24 @@
+:root {
+  --color-bg: #070809;
+  --color-bg-soft: #101214;
+  --color-card: #15181c;
+  --color-card-hover: #1b1f25;
+
+  --color-text: #f4f1ea;
+  --color-text-soft: #b8bec7;
+  --color-text-muted: #8d939c;
+
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+
+  --color-accent: #aeb9c8;
+  --color-accent-strong: #d7dde7;
+
+  --font-main: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: Inter, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', 'IBM Plex Mono', monospace;
+
+  --container: 1200px;
+  --radius-lg: 28px;
+  --radius-md: 18px;
+}
