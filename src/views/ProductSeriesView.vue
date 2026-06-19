@@ -34,7 +34,7 @@ onMounted(() => {
           <div class="series-hero__breadcrumb">
             <RouterLink to="/">首页</RouterLink>
             <span>/</span>
-            <RouterLink to="/products">产品系列</RouterLink>
+            <RouterLink to="/products">产品目录</RouterLink>
             <span>/</span>
             <strong>{{ product.nameZh }}</strong>
           </div>
@@ -90,8 +90,8 @@ onMounted(() => {
     </template>
 
     <section v-else class="not-found">
-      <h1>产品系列不存在</h1>
-      <RouterLink to="/products">返回产品系列</RouterLink>
+      <h1>产品目录不存在</h1>
+      <RouterLink to="/products">返回产品目录</RouterLink>
     </section>
   </main>
 </template>

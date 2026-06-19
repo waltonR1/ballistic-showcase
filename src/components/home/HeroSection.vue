@@ -4,41 +4,53 @@ import gsap from 'gsap'
 
 const heroRef = ref<HTMLElement | null>(null)
 
+function handleHeroPointer(event: PointerEvent) {
+  const panel = event.currentTarget as HTMLElement
+  const rect = panel.getBoundingClientRect()
+  const x = (event.clientX - rect.left) / rect.width
+  const y = (event.clientY - rect.top) / rect.height
+  const dx = x - 0.5
+  const dy = y - 0.5
+
+  panel.style.setProperty('--mouse-x', `${x * 100}%`)
+  panel.style.setProperty('--mouse-y', `${y * 100}%`)
+  panel.style.setProperty('--tilt-x', `${dy * -12}deg`)
+  panel.style.setProperty('--tilt-y', `${dx * 14}deg`)
+  panel.style.setProperty('--shift-x', `${dx * 42}px`)
+  panel.style.setProperty('--shift-y', `${dy * 36}px`)
+}
+
+function resetHeroPointer(event: PointerEvent) {
+  const panel = event.currentTarget as HTMLElement
+
+  panel.style.setProperty('--mouse-x', '50%')
+  panel.style.setProperty('--mouse-y', '50%')
+  panel.style.setProperty('--tilt-x', '0deg')
+  panel.style.setProperty('--tilt-y', '0deg')
+  panel.style.setProperty('--shift-x', '0px')
+  panel.style.setProperty('--shift-y', '0px')
+}
+
 onMounted(() => {
   if (!heroRef.value) return
 
   gsap.from(heroRef.value.querySelectorAll('.hero-animate'), {
     opacity: 0,
-    y: 28,
-    duration: 0.9,
-    stagger: 0.1,
-    ease: 'power3.out',
-  })
-
-  gsap.to(heroRef.value.querySelectorAll('.hero__ring'), {
-    rotate: 360,
-    duration: 24,
-    repeat: -1,
-    ease: 'none',
-    stagger: 4,
+    y: 70,
+    scale: 0.94,
+    filter: 'blur(14px)',
+    duration: 1.18,
+    stagger: 0.13,
+    ease: 'power4.out',
+    clearProps: 'opacity,visibility,transform,filter',
   })
 
   gsap.to(heroRef.value.querySelector('.hero__scanner'), {
-    yPercent: 165,
-    duration: 4.8,
+    yPercent: 560,
+    duration: 3.2,
     repeat: -1,
     yoyo: true,
     ease: 'sine.inOut',
-  })
-
-  gsap.to(heroRef.value.querySelectorAll('.hero__node'), {
-    scale: 1.18,
-    opacity: 1,
-    duration: 1.8,
-    repeat: -1,
-    yoyo: true,
-    ease: 'sine.inOut',
-    stagger: 0.28,
   })
 })
 </script>
@@ -59,33 +71,53 @@ onMounted(() => {
 
         <div class="hero__actions hero-animate">
           <a class="hero__button hero__button--primary" href="#products">查看产品</a>
-          <a class="hero__button hero__button--secondary" href="#contact">申请技术资料</a>
+          <a class="hero__button hero__button--secondary" href="#contact">联系我们</a>
+        </div>
+
+        <div class="hero__status hero-animate" aria-label="Showcase capabilities">
+          <span><strong>06</strong> 防护品类</span>
+          <span><strong>CN / FR</strong> 中法对接</span>
+          <span><strong>B2B</strong> 资料支持</span>
         </div>
       </div>
 
-      <div class="hero__visual hero-animate" aria-label="弹道防护装备展示动画">
+      <div
+        class="hero__visual hero-animate"
+        aria-label="弹道防护装备展示动画"
+        @pointermove="handleHeroPointer"
+        @pointerleave="resetHeroPointer"
+      >
         <div class="hero__grid"></div>
         <div class="hero__scanner"></div>
-        <div class="hero__core">
-          <span class="hero__ring hero__ring--outer"></span>
-          <span class="hero__ring hero__ring--middle"></span>
-          <span class="hero__ring hero__ring--inner"></span>
-          <span class="hero__axis hero__axis--x"></span>
-          <span class="hero__axis hero__axis--y"></span>
-          <span class="hero__node hero__node--one"></span>
-          <span class="hero__node hero__node--two"></span>
-          <span class="hero__node hero__node--three"></span>
-          <span class="hero__pulse"></span>
-        </div>
 
-        <div class="hero__floating hero__floating--top">
-          <span>CATEGORY</span>
-          <strong>Personal Armour</strong>
-        </div>
+        <div class="hero__armour-system">
+          <div class="hero__vest-outline">
+            <span class="hero__strap hero__strap--left"></span>
+            <span class="hero__strap hero__strap--right"></span>
+            <span class="hero__torso"></span>
+          </div>
 
-        <div class="hero__floating hero__floating--bottom">
-          <span>FOCUS</span>
-          <strong>Professional Grade Protection</strong>
+          <div class="hero__layers" aria-hidden="true">
+            <span class="armor-layer armor-layer--carrier"></span>
+            <span class="armor-layer armor-layer--soft"></span>
+            <span class="armor-layer armor-layer--plate"></span>
+            <span class="armor-layer armor-layer--buffer"></span>
+          </div>
+
+          <div class="hero__layer-label hero__layer-label--one">
+            <span>01</span>
+            <strong>Outer Carrier</strong>
+          </div>
+
+          <div class="hero__layer-label hero__layer-label--two">
+            <span>02</span>
+            <strong>Soft Armour</strong>
+          </div>
+
+          <div class="hero__layer-label hero__layer-label--three">
+            <span>03</span>
+            <strong>Hard Plate</strong>
+          </div>
         </div>
       </div>
     </div>
@@ -96,7 +128,7 @@ onMounted(() => {
 .hero {
   min-height: 100vh;
   width: 100%;
-  padding: 100.8px 0 79.2px;
+  padding: 104px 0 72px;
   display: flex;
   align-items: center;
 }
@@ -105,9 +137,9 @@ onMounted(() => {
   width: min(90%, var(--container));
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(468px, 0.9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(460px, 0.86fr);
   align-items: center;
-  gap: clamp(50.4px, 6vw, 108px);
+  gap: clamp(48px, 6vw, 96px);
 }
 
 .hero__content {
@@ -175,10 +207,50 @@ onMounted(() => {
   transform: translateY(-1.8px);
 }
 
+.hero__status {
+  width: min(100%, 720px);
+  margin-top: 36px;
+  padding: 12px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.hero__status span {
+  min-height: 58px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  border: 0.9px solid rgba(255, 255, 255, 0.055);
+  border-radius: 16px;
+  background: rgba(7, 8, 9, 0.38);
+  color: var(--color-text-muted);
+  font-size: 11.7px;
+  line-height: 1.35;
+}
+
+.hero__status strong {
+  color: var(--color-text);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+}
+
 .hero__visual {
+  --mouse-x: 50%;
+  --mouse-y: 50%;
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  --shift-x: 0px;
+  --shift-y: 0px;
   position: relative;
   width: 100%;
-  min-height: clamp(540px, 64vh, 738px);
+  min-height: clamp(520px, 64vh, 720px);
   justify-self: stretch;
   border: 0.9px solid var(--color-line);
   border-radius: 36px;
@@ -187,9 +259,24 @@ onMounted(() => {
     radial-gradient(circle at 50% 44%, rgba(215, 221, 231, 0.18), transparent 30%),
     radial-gradient(circle at 72% 22%, rgba(174, 185, 200, 0.1), transparent 22%),
     linear-gradient(180deg, #12161b 0%, #090b0e 100%);
+  box-shadow: var(--shadow-panel);
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: perspective(1200px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  transform-style: preserve-3d;
+  transition:
+    transform 0.18s ease-out,
+    border-color 0.28s ease,
+    box-shadow 0.28s ease;
+  will-change: transform;
+}
+
+.hero__visual:hover {
+  border-color: rgba(244, 241, 234, 0.24);
+  box-shadow:
+    0 34px 100px rgba(0, 0, 0, 0.42),
+    0 0 70px rgba(215, 221, 231, 0.1);
 }
 
 .hero__visual::before {
@@ -197,9 +284,29 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   background:
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(244, 241, 234, 0.22),
+      transparent 18%
+    ),
     linear-gradient(115deg, transparent 0%, rgba(255, 255, 255, 0.09) 46%, transparent 58%),
     radial-gradient(circle at center, transparent 0 42%, rgba(7, 8, 9, 0.58) 74%);
   opacity: 0.58;
+  transition: opacity 0.24s ease;
+  transform: translateZ(28px);
+}
+
+.hero__visual:hover::before {
+  opacity: 0.92;
+}
+
+.hero__visual::after {
+  content: '';
+  position: absolute;
+  inset: 14px;
+  pointer-events: none;
+  border: 0.9px solid rgba(255, 255, 255, 0.05);
+  border-radius: 27px;
 }
 
 .hero__grid {
@@ -210,153 +317,440 @@ onMounted(() => {
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0.9px, transparent 0.9px);
   background-size: 30.6px 30.6px;
   mask-image: radial-gradient(circle at center, black, transparent 78%);
+  transform: translate3d(calc(var(--shift-x) * -0.28), calc(var(--shift-y) * -0.28), 18px);
+  transition: transform 0.45s cubic-bezier(0.18, 0.9, 0.24, 1);
 }
 
 .hero__scanner {
   position: absolute;
-  left: 9%;
-  right: 9%;
-  top: 14%;
-  height: 0.9px;
+  left: 10%;
+  right: 10%;
+  top: 10%;
+  height: 1px;
   background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.9), transparent);
   box-shadow: 0 0 27px rgba(215, 221, 231, 0.35);
   opacity: 0.72;
+  transform: translateZ(42px);
 }
 
-.hero__core {
+.hero__armour-system {
   position: relative;
-  width: min(72%, 558px);
-  aspect-ratio: 1;
+  width: min(90%, 660px);
+  min-height: 536px;
+  transform: translate3d(calc(var(--shift-x) * 0.32), calc(var(--shift-y) * 0.28), 72px) scale(1.02);
+  transform-style: preserve-3d;
+  transition: transform 0.42s cubic-bezier(0.18, 0.95, 0.18, 1);
 }
 
-.hero__ring,
-.hero__axis,
-.hero__node,
-.hero__pulse {
-  position: absolute;
-  display: block;
-}
-
-.hero__ring {
-  inset: 0;
-  border: 0.9px solid rgba(215, 221, 231, 0.26);
-  border-radius: 50%;
-}
-
-.hero__ring::before,
-.hero__ring::after {
+.hero__armour-system::before {
   content: '';
   position: absolute;
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--color-accent-strong);
-  box-shadow: 0 0 19.8px rgba(215, 221, 231, 0.48);
+  left: 50%;
+  top: 52%;
+  z-index: 1;
+  width: 320px;
+  height: 390px;
+  border-radius: 42px;
+  background:
+    radial-gradient(ellipse at center, rgba(0, 0, 0, 0.52), transparent 64%),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.2), transparent);
+  filter: blur(24px);
+  opacity: 0.58;
+  transform: translate(-50%, -50%) scale(0.92);
+  transition:
+    transform 0.56s cubic-bezier(0.18, 0.95, 0.18, 1),
+    opacity 0.36s ease,
+    filter 0.36s ease;
 }
 
-.hero__ring::before {
-  top: 10%;
-  left: 22%;
+.hero__visual:hover .hero__armour-system {
+  transform: translate3d(calc(var(--shift-x) * 0.18), calc(var(--shift-y) * 0.14), 96px) scale(1.06);
 }
 
-.hero__ring::after {
-  right: 14%;
-  bottom: 18%;
+.hero__visual:hover .hero__armour-system::before {
+  opacity: 0.76;
+  filter: blur(34px);
+  transform: translate(calc(-50% - (var(--shift-x) * 0.22)), calc(-50% - (var(--shift-y) * 0.18))) scale(1.08);
 }
 
-.hero__ring--middle {
-  inset: 14%;
-  border-style: dashed;
-  opacity: 0.9;
+.hero__vest-outline,
+.hero__layers,
+.armor-layer,
+.hero__strap,
+.hero__torso,
+.hero__layer-label {
+  position: absolute;
+  display: block;
 }
 
-.hero__ring--inner {
-  inset: 31%;
-  border-color: rgba(215, 221, 231, 0.42);
+.hero__vest-outline {
+  left: 50%;
+  top: 48%;
+  z-index: 4;
+  width: 292px;
+  height: 406px;
+  transform: translate(-50%, -50%) translateZ(104px);
+  filter: drop-shadow(0 30px 36px rgba(0, 0, 0, 0.36));
+  transition:
+    transform 0.54s cubic-bezier(0.18, 0.95, 0.18, 1),
+    filter 0.34s ease;
+  will-change: transform;
 }
 
-.hero__axis {
+.hero__visual:hover .hero__vest-outline {
+  transform:
+    translate(calc(-50% + (var(--shift-x) * 0.1)), calc(-50% + (var(--shift-y) * 0.08)))
+    translateZ(176px)
+    scale(1.1);
+  filter:
+    drop-shadow(0 46px 44px rgba(0, 0, 0, 0.42))
+    drop-shadow(0 0 24px rgba(244, 241, 234, 0.1));
+}
+
+.hero__vest-outline::before,
+.hero__vest-outline::after {
+  content: '';
+  position: absolute;
+  top: 28px;
+  width: 66px;
+  height: 118px;
+  border: 1px solid rgba(244, 241, 234, 0.22);
+  border-bottom: none;
+  background: linear-gradient(180deg, rgba(244, 241, 234, 0.08), transparent);
+}
+
+.hero__vest-outline::before {
+  left: 38px;
+  border-radius: 24px 8px 0 0;
+  transform: rotate(-8deg);
+}
+
+.hero__vest-outline::after {
+  right: 38px;
+  border-radius: 8px 24px 0 0;
+  transform: rotate(8deg);
+}
+
+.hero__strap {
+  top: 22px;
+  width: 38px;
+  height: 112px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(244, 241, 234, 0.2), rgba(244, 241, 234, 0.02));
+  border: 1px solid rgba(244, 241, 234, 0.18);
+  transition:
+    transform 0.46s cubic-bezier(0.18, 0.95, 0.18, 1),
+    border-color 0.28s ease,
+    background 0.28s ease;
+}
+
+.hero__strap--left {
+  left: 68px;
+  transform: rotate(-9deg);
+}
+
+.hero__strap--right {
+  right: 68px;
+  transform: rotate(9deg);
+}
+
+.hero__torso {
+  left: 26px;
+  right: 26px;
+  bottom: 0;
+  height: 326px;
+  clip-path: polygon(15% 0, 85% 0, 100% 24%, 89% 100%, 11% 100%, 0 24%);
+  border: 1px solid rgba(244, 241, 234, 0.24);
+  border-radius: 26px;
+  background:
+    linear-gradient(90deg, transparent 49.5%, rgba(255, 255, 255, 0.16) 50%, transparent 50.5%),
+    linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+    linear-gradient(160deg, rgba(244, 241, 234, 0.16), rgba(18, 22, 27, 0.94) 36%, #090b0e 100%);
+  background-size:
+    auto,
+    100% 34px,
+    34px 100%,
+    auto;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.14),
+    inset 0 -28px 48px rgba(0, 0, 0, 0.34);
+  transition:
+    border-color 0.34s ease,
+    background 0.34s ease,
+    box-shadow 0.34s ease;
+}
+
+.hero__torso::before,
+.hero__torso::after {
+  content: '';
+  position: absolute;
+  left: 28px;
+  right: 28px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.2), transparent);
+  transition:
+    opacity 0.28s ease,
+    transform 0.42s cubic-bezier(0.18, 0.95, 0.18, 1),
+    background 0.28s ease;
+}
+
+.hero__torso::before {
+  top: 86px;
+}
+
+.hero__torso::after {
+  bottom: 78px;
+}
+
+.hero__visual:hover .hero__torso {
+  border-color: rgba(244, 241, 234, 0.38);
+  background:
+    radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(244, 241, 234, 0.18), transparent 26%),
+    linear-gradient(90deg, transparent 49.5%, rgba(255, 255, 255, 0.2) 50%, transparent 50.5%),
+    linear-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(160deg, rgba(244, 241, 234, 0.2), rgba(18, 22, 27, 0.94) 34%, #090b0e 100%);
+  background-size:
+    auto,
+    auto,
+    100% 34px,
+    34px 100%,
+    auto;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    inset 0 -28px 48px rgba(0, 0, 0, 0.34),
+    0 0 28px rgba(244, 241, 234, 0.08);
+}
+
+.hero__visual:hover .hero__torso::before {
+  opacity: 0.88;
+  transform: translateY(-8px);
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.36), transparent);
+}
+
+.hero__visual:hover .hero__torso::after {
+  opacity: 0.88;
+  transform: translateY(8px);
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.32), transparent);
+}
+
+.hero__layers {
+  left: 50%;
+  top: 49%;
+  z-index: 3;
+  width: 392px;
+  height: 328px;
+  transform: translate(-50%, -50%) translateZ(48px);
+  pointer-events: none;
+}
+
+.hero__layers::before,
+.hero__layers::after {
+  content: '';
+  position: absolute;
   left: 50%;
   top: 50%;
-  width: 100%;
-  height: 0.9px;
-  background: linear-gradient(90deg, transparent, rgba(215, 221, 231, 0.42), transparent);
+  width: 480px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.28), transparent);
+  opacity: 0;
   transform-origin: center;
+  transition:
+    opacity 0.34s ease,
+    transform 0.58s cubic-bezier(0.18, 0.95, 0.18, 1);
 }
 
-.hero__axis--x {
-  transform: translate(-50%, -50%);
+.hero__layers::before {
+  transform: translate(-50%, -50%) rotate(-28deg) scaleX(0.55);
 }
 
-.hero__axis--y {
-  transform: translate(-50%, -50%) rotate(90deg);
+.hero__layers::after {
+  transform: translate(-50%, -50%) rotate(31deg) scaleX(0.55);
 }
 
-.hero__node {
-  width: 14.4px;
-  height: 14.4px;
-  border: 0.9px solid rgba(244, 241, 234, 0.68);
-  border-radius: 50%;
-  background: rgba(244, 241, 234, 0.18);
-  box-shadow: 0 0 23.4px rgba(215, 221, 231, 0.42);
+.hero__visual:hover .hero__layers::before,
+.hero__visual:hover .hero__layers::after {
+  opacity: 0.78;
+}
+
+.hero__visual:hover .hero__layers::before {
+  transform: translate(-50%, -50%) rotate(-32deg) scaleX(1);
+}
+
+.hero__visual:hover .hero__layers::after {
+  transform: translate(-50%, -50%) rotate(35deg) scaleX(1);
+}
+
+.armor-layer {
+  left: 50%;
+  top: 50%;
+  width: 280px;
+  height: 350px;
+  border: 1px solid rgba(244, 241, 234, 0.14);
+  border-radius: 28px;
+  clip-path: polygon(16% 0, 84% 0, 100% 25%, 88% 100%, 12% 100%, 0 25%);
+  opacity: 0.46;
+  transition:
+    transform 0.62s cubic-bezier(0.18, 0.95, 0.18, 1),
+    opacity 0.35s ease,
+    border-color 0.35s ease,
+    box-shadow 0.35s ease,
+    background 0.35s ease;
+  will-change: transform;
+  transform-style: preserve-3d;
+}
+
+.armor-layer--carrier {
+  background: rgba(244, 241, 234, 0.045);
+  transform: translate(-50%, -50%) translateX(-72px) translateY(18px) scale(0.9);
+  animation: armor-layer-carrier-float 5.4s ease-in-out infinite;
+}
+
+.armor-layer--soft {
+  background: rgba(174, 185, 200, 0.07);
+  transform: translate(-50%, -50%) translateX(-34px) translateY(8px) scale(0.95);
+  animation: armor-layer-soft-float 6s ease-in-out infinite;
+}
+
+.armor-layer--plate {
+  border-color: rgba(244, 241, 234, 0.26);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.12), transparent 34%), rgba(215, 221, 231, 0.08);
+  transform: translate(-50%, -50%) translateX(18px) translateY(-2px) scale(1);
   opacity: 0.62;
+  animation: armor-layer-plate-float 4.9s ease-in-out infinite;
 }
 
-.hero__node--one {
-  left: 18%;
-  top: 28%;
+.armor-layer--buffer {
+  background: rgba(7, 8, 9, 0.44);
+  transform: translate(-50%, -50%) translateX(58px) translateY(-12px) scale(0.88);
+  opacity: 0.38;
+  animation: armor-layer-buffer-float 6.4s ease-in-out infinite;
 }
 
-.hero__node--two {
-  right: 22%;
-  top: 36%;
-}
-
-.hero__node--three {
-  left: 47%;
-  bottom: 16%;
-}
-
-.hero__pulse {
-  inset: 42%;
-  border-radius: 50%;
-  background: var(--color-text);
+.hero__visual:hover .armor-layer {
+  animation-play-state: paused;
+  border-color: rgba(244, 241, 234, 0.24);
   box-shadow:
-    0 0 19.8px rgba(244, 241, 234, 0.52),
-    0 0 63px rgba(174, 185, 200, 0.32);
-  animation: hero-pulse 2.8s ease-in-out infinite;
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    0 22px 38px rgba(0, 0, 0, 0.24);
 }
 
-.hero__floating {
+.hero__visual:hover .armor-layer--carrier {
+  transform:
+    translate3d(
+      calc(-50% - 156px - (var(--shift-x) * 0.16)),
+      calc(-50% - 78px + (var(--shift-y) * 0.08)),
+      -128px
+    )
+    rotate(-17deg)
+    rotateX(12deg)
+    rotateY(-10deg)
+    scale(0.82);
+  opacity: 0.42;
+}
+
+.hero__visual:hover .armor-layer--soft {
+  transform:
+    translate3d(
+      calc(-50% - 104px + (var(--shift-y) * 0.12)),
+      calc(-50% + 112px - (var(--shift-x) * 0.1)),
+      -72px
+    )
+    rotate(13deg)
+    rotateX(-10deg)
+    rotateY(-8deg)
+    scale(0.9);
+  opacity: 0.5;
+}
+
+.hero__visual:hover .armor-layer--plate {
+  transform:
+    translate3d(
+      calc(-50% + 126px - (var(--shift-x) * 0.18)),
+      calc(-50% - 106px - (var(--shift-y) * 0.12)),
+      -44px
+    )
+    rotate(-11deg)
+    rotateX(9deg)
+    rotateY(12deg)
+    scale(0.98);
+  opacity: 0.76;
+}
+
+.hero__visual:hover .armor-layer--buffer {
+  transform:
+    translate3d(
+      calc(-50% + 172px + (var(--shift-y) * 0.14)),
+      calc(-50% + 92px - (var(--shift-x) * 0.12)),
+      -152px
+    )
+    rotate(18deg)
+    rotateX(-14deg)
+    rotateY(14deg)
+    scale(0.8);
+  opacity: 0.34;
+}
+
+.hero__layer-label {
+  z-index: 5;
+  min-width: 138px;
+  padding: 10px 12px;
+  border: 1px solid rgba(244, 241, 234, 0.1);
+  border-radius: 14px;
+  background: rgba(8, 9, 10, 0.62);
+  backdrop-filter: blur(12px);
+}
+
+.hero__layer-label::before {
+  content: '';
   position: absolute;
-  padding: 12.6px 14.4px;
-  border: 0.9px solid var(--color-line);
-  border-radius: 16.2px;
-  background: rgba(8, 9, 10, 0.72);
-  backdrop-filter: blur(12.6px);
+  top: 50%;
+  width: 78px;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(244, 241, 234, 0.36), transparent);
 }
 
-.hero__floating--top {
-  top: 21.6px;
-  right: 21.6px;
+.hero__layer-label--one {
+  left: 0;
+  top: 72px;
 }
 
-.hero__floating--bottom {
-  left: 21.6px;
-  bottom: 21.6px;
+.hero__layer-label--one::before {
+  left: 100%;
 }
 
-.hero__floating span {
+.hero__layer-label--two {
+  right: -4px;
+  top: 178px;
+}
+
+.hero__layer-label--two::before {
+  right: 100%;
+  transform: rotate(180deg);
+}
+
+.hero__layer-label--three {
+  left: 18px;
+  bottom: 64px;
+}
+
+.hero__layer-label--three::before {
+  left: 100%;
+}
+
+.hero__layer-label span {
   display: block;
-  margin-bottom: 5.4px;
+  margin-bottom: 5px;
   font-family: var(--font-mono);
-  font-size: 9.9px;
-  letter-spacing: 0.18em;
+  font-size: 9px;
+  letter-spacing: 0.2em;
   color: var(--color-text-muted);
 }
 
-.hero__floating strong {
-  font-size: 12.6px;
+.hero__layer-label strong {
+  font-size: 12px;
   color: var(--color-text);
 }
 
@@ -379,8 +773,9 @@ onMounted(() => {
     min-height: 378px;
   }
 
-  .hero__core {
-    width: min(78%, 324px);
+  .hero__armour-system {
+    width: min(94%, 560px);
+    min-height: 440px;
   }
 }
 
@@ -399,6 +794,10 @@ onMounted(() => {
     align-items: stretch;
   }
 
+  .hero__status {
+    grid-template-columns: 1fr;
+  }
+
   .hero__button {
     width: 100%;
   }
@@ -408,21 +807,108 @@ onMounted(() => {
     border-radius: 25.2px;
   }
 
-  .hero__floating {
-    max-width: calc(100% - 28.8px);
+  .hero__armour-system {
+    width: 100%;
+    min-height: 336px;
+  }
+
+  .hero__vest-outline {
+    width: 190px;
+    height: 276px;
+  }
+
+  .hero__torso {
+    height: 220px;
+  }
+
+  .hero__layers {
+    width: 268px;
+    height: 238px;
+  }
+
+  .armor-layer {
+    width: 188px;
+    height: 238px;
+  }
+
+  .hero__layer-label {
+    display: none;
   }
 }
 
-@keyframes hero-pulse {
+@media (hover: none) and (pointer: coarse) {
+  .hero__visual {
+    animation: hero-mobile-drift 6s ease-in-out infinite;
+  }
+
+  .hero__armour-system {
+    animation: hero-core-mobile 4.8s ease-in-out infinite;
+  }
+}
+
+@keyframes armor-layer-carrier-float {
   0%,
   100% {
-    transform: scale(0.82);
-    opacity: 0.68;
+    transform: translate(-50%, -50%) translateX(-72px) translateY(18px) rotate(-1deg) scale(0.9);
   }
 
   50% {
-    transform: scale(1.08);
-    opacity: 1;
+    transform: translate(-50%, -50%) translateX(-116px) translateY(-24px) rotate(-7deg) scale(0.925);
+  }
+}
+
+@keyframes armor-layer-soft-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateX(-34px) translateY(8px) rotate(1deg) scale(0.95);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateX(10px) translateY(42px) rotate(7deg) scale(0.975);
+  }
+}
+
+@keyframes armor-layer-plate-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateX(18px) translateY(-2px) rotate(-1deg) scale(1);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateX(62px) translateY(-42px) rotate(6deg) scale(1.022);
+  }
+}
+
+@keyframes armor-layer-buffer-float {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateX(58px) translateY(-12px) rotate(1deg) scale(0.88);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) translateX(18px) translateY(34px) rotate(-8deg) scale(0.905);
+  }
+}
+
+@keyframes hero-mobile-drift {
+  0%,
+  100% {
+    transform: perspective(1200px) rotateX(0deg) rotateY(0deg);
+  }
+
+  50% {
+    transform: perspective(1200px) rotateX(4deg) rotateY(-5deg);
+  }
+}
+
+@keyframes hero-core-mobile {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 72px) scale(1.02);
+  }
+
+  50% {
+    transform: translate3d(18px, -14px, 72px) scale(1.05);
   }
 }
 </style>

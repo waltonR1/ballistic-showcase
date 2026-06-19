@@ -360,7 +360,7 @@ export const products: ProductItem[] = [
     nameZh: '防弹毯',
     nameFr: 'Couvertures balistiques',
     eyebrow: 'BALLISTIC BLANKETS',
-    descriptionZh: '用于临时覆盖、现场处置和特殊防护需求的柔性防护产品系列。',
+    descriptionZh: '用于临时覆盖、现场处置和特殊防护需求的柔性防护品类。',
     image: '/images/products/blanket/防弹毯正.jpg',
     variants: [
       {

@@ -5,9 +5,14 @@ import { RouterLink } from 'vue-router'
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
 const currentLocale = ref<'CN' | 'FR'>('CN')
+const scrollProgress = ref(0)
 
 function handleScroll() {
-  isScrolled.value = window.scrollY > 20
+  const scrollTop = window.scrollY
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight
+
+  isScrolled.value = scrollTop > 20
+  scrollProgress.value = scrollable > 0 ? Math.min(scrollTop / scrollable, 1) : 0
 }
 
 function closeMenu() {
@@ -20,11 +25,13 @@ function toggleLocale() {
 
 onMounted(() => {
   handleScroll()
-  window.addEventListener('scroll', handleScroll)
+  window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('resize', handleScroll)
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('resize', handleScroll)
 })
 </script>
 
@@ -38,7 +45,7 @@ onUnmounted(() => {
 
       <nav class="site-header__nav" :class="{ 'site-header__nav--open': isMenuOpen }">
         <RouterLink to="/" @click="closeMenu">首页</RouterLink>
-        <RouterLink to="/products" @click="closeMenu">产品系列</RouterLink>
+        <RouterLink to="/products" @click="closeMenu">产品目录</RouterLink>
         <RouterLink to="/scenarios" @click="closeMenu">应用场景</RouterLink>
         <RouterLink to="/resources" @click="closeMenu">资料中心</RouterLink>
       </nav>
@@ -70,6 +77,8 @@ onUnmounted(() => {
         </button>
       </div>
     </div>
+
+    <div class="site-header__progress" :style="{ transform: `scaleX(${scrollProgress})` }"></div>
   </header>
 </template>
 
@@ -83,10 +92,36 @@ onUnmounted(() => {
   transition: 0.3s ease;
 }
 
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.03), transparent 46%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
 .site-header--scrolled {
   background: rgba(7, 8, 9, 0.72);
   backdrop-filter: blur(16.2px);
   border-bottom: 0.9px solid var(--color-line);
+}
+
+.site-header--scrolled::before {
+  opacity: 1;
+}
+
+.site-header__progress {
+  position: absolute;
+  left: 0;
+  bottom: -0.9px;
+  width: 100%;
+  height: 0.9px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  background: linear-gradient(90deg, transparent, var(--color-accent-strong), transparent);
+  opacity: 0.72;
 }
 
 .site-header__inner {
@@ -143,11 +178,13 @@ onUnmounted(() => {
   transition: width 0.25s ease;
 }
 
-.site-header__nav a:hover {
+.site-header__nav a:hover,
+.site-header__nav a.router-link-exact-active {
   color: var(--color-text);
 }
 
-.site-header__nav a:hover::after {
+.site-header__nav a:hover::after,
+.site-header__nav a.router-link-exact-active::after {
   width: 100%;
 }
 

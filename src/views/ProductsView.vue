@@ -8,7 +8,7 @@ import { assetUrl } from '@/utils/asset'
   <main class="products-page">
     <section class="products-page__hero">
       <p>ALL PRODUCTS</p>
-      <h1>全部产品系列</h1>
+      <h1>全部产品目录</h1>
       <span> 展示当前可用于产品资料对接与销售沟通的主要弹道防护装备类别。</span>
     </section>
 

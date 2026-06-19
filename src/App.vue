@@ -7,11 +7,14 @@ import Lenis from 'lenis'
 
 import SiteHeader from '@/components/layout/SiteHeader.vue'
 import SiteFooter from '@/components/layout/SiteFooter.vue'
-import FloatingBadge from '@/components/layout/FloatingBadge.vue'
 
 let lenis: Lenis | null = null
 
 onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return
+  }
+
   lenis = new Lenis({
     duration: 1.1,
     smoothWheel: true,
@@ -36,5 +39,4 @@ onUnmounted(() => {
   <SiteHeader />
   <RouterView />
   <SiteFooter />
-  <FloatingBadge />
 </template>

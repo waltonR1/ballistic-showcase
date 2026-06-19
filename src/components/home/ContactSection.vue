@@ -1,32 +1,18 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import gsap from 'gsap'
+import { revealOnScroll } from '@/utils/motion'
 
 const sectionRef = ref<HTMLElement | null>(null)
 
 onMounted(() => {
   if (!sectionRef.value) return
 
-  gsap.fromTo(
-    sectionRef.value.querySelectorAll('.contact-animate'),
-    {
-      autoAlpha: 0,
-      y: 32,
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power3.out',
-      clearProps: 'opacity,visibility,transform',
-      scrollTrigger: {
-        trigger: sectionRef.value,
-        start: 'top 72%',
-        once: true,
-      },
-    },
-  )
+  revealOnScroll(sectionRef.value, '.contact-animate', {
+    y: 86,
+    scale: 0.95,
+    stagger: 0.14,
+    duration: 1,
+  })
 })
 </script>
 
@@ -36,10 +22,10 @@ onMounted(() => {
       <p>CONTACT & RFQ</p>
 
       <div>
-        <h2>申请技术资料或产品咨询</h2>
+        <h2>产品咨询</h2>
         <span>
-          面向法国及欧洲专业客户，提供产品目录、基础参数、图片资料、规格文件与商务沟通支持。具体防护等级、认证资料与报价信息建议通过正式联系确认。</span
-        >
+          面向法国及欧洲专业客户，提供产品目录、基础参数、图片资料、规格文件与商务沟通支持。请通过正式联系确认防护等级、认证资料、交付范围与报价信息。
+        </span>
       </div>
     </div>
 
@@ -47,13 +33,13 @@ onMounted(() => {
       <div class="contact-section__info contact-animate">
         <div class="contact-section__panel">
           <span>PROFESSIONAL ENQUIRY</span>
-          <h3>资料申请建议包含以下信息</h3>
+          <h3>为了更快匹配资料，请尽量说明以下信息</h3>
 
           <ul>
-            <li>目标产品类别，例如防弹背心、头盔、盾牌或插板</li>
-            <li>预计使用场景，例如安防、机构采购或专业防护</li>
-            <li>所需资料类型，例如产品图、参数、测试文件或报价</li>
-            <li>所在国家、采购数量范围与期望沟通语言</li>
+            <li>目标产品类别，例如背心、头盔、盾牌、插板或软质防护组件</li>
+            <li>应用场景与采购主体，例如安防、机构采购、企业防护或项目配套</li>
+            <li>希望获取的资料，例如产品图、基础参数、规格说明、测试文件或报价</li>
+            <li>所在国家、数量范围、时间计划与期望沟通语言</li>
           </ul>
         </div>
 
@@ -102,18 +88,17 @@ onMounted(() => {
 
         <label>
           <span>需求说明</span>
-          <textarea placeholder="请简单说明产品需求、应用场景、数量范围或所需资料类型"></textarea>
+          <textarea placeholder="请说明产品类别、应用场景、数量范围、目标资料类型或其他商务需求"></textarea>
         </label>
 
         <div class="contact-form__notice">
-          <span>说明</span>
+          <span>重要提示</span>
           <p>
-            当前第一版表单仅用于页面展示。正式上线前可接入邮件发送、Cloudflare Pages Functions
-            或第三方表单服务。
+            防护等级、测试报告、认证文件与报价信息需结合具体产品型号和使用场景确认。提交需求后，我们会优先对接产品资料、基础参数与后续商务沟通安排。
           </p>
         </div>
 
-        <a class="contact-form__button" href="mailto:contact@example.com"> 通过邮件发送咨询</a>
+        <a class="contact-form__button" href="mailto:contact@example.com">通过邮件发送咨询</a>
       </form>
     </div>
   </section>
@@ -123,7 +108,7 @@ onMounted(() => {
 .contact-section {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
-  padding: 108px 0;
+  padding: var(--section-space) 0;
 }
 
 .contact-section__header {
@@ -172,11 +157,49 @@ onMounted(() => {
 
 .contact-section__panel,
 .contact-form {
+  position: relative;
   border: 0.9px solid var(--color-line);
   border-radius: 32.4px;
+  overflow: hidden;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.1), transparent 36%),
-    var(--color-card);
+    var(--color-surface-raised);
+  box-shadow: var(--shadow-panel);
+  transition:
+    transform 0.34s ease,
+    border-color 0.34s ease,
+    box-shadow 0.34s ease;
+}
+
+.contact-section__panel::before,
+.contact-form::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(115deg, transparent 0%, rgba(244, 241, 234, 0.08) 48%, transparent 58%),
+    radial-gradient(circle at 84% 12%, rgba(210, 220, 235, 0.14), transparent 24%);
+  opacity: 0;
+  transform: translateX(-18%);
+  transition:
+    opacity 0.34s ease,
+    transform 0.56s cubic-bezier(0.18, 0.95, 0.18, 1);
+}
+
+.contact-section__panel:hover,
+.contact-form:hover {
+  transform: translateY(-3px);
+  border-color: rgba(244, 241, 234, 0.18);
+  box-shadow:
+    0 32px 90px rgba(0, 0, 0, 0.42),
+    0 0 58px rgba(210, 220, 235, 0.08);
+}
+
+.contact-section__panel:hover::before,
+.contact-form:hover::before {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .contact-section__panel {
@@ -210,6 +233,30 @@ onMounted(() => {
   padding-left: 19.8px;
   line-height: 1.75;
   color: var(--color-text-soft);
+  transition:
+    color 0.28s ease,
+    transform 0.28s ease;
+  animation: contact-check-pulse 5.6s ease-in-out infinite;
+}
+
+.contact-section__panel li:nth-child(2) {
+  animation-delay: 0.45s;
+}
+
+.contact-section__panel li:nth-child(3) {
+  animation-delay: 0.9s;
+}
+
+.contact-section__panel li:nth-child(4) {
+  animation-delay: 1.35s;
+}
+
+.contact-section__panel:hover li {
+  color: var(--color-text);
+}
+
+.contact-section__panel li:hover {
+  transform: translateX(4px);
 }
 
 .contact-section__panel li::before {
@@ -221,6 +268,12 @@ onMounted(() => {
   height: 6.3px;
   border-radius: 899.1px;
   background: var(--color-accent);
+  box-shadow: 0 0 0 rgba(244, 241, 234, 0);
+  transition: box-shadow 0.28s ease;
+}
+
+.contact-section__panel:hover li::before {
+  box-shadow: 0 0 18px rgba(244, 241, 234, 0.26);
 }
 
 .contact-section__meta {
@@ -229,10 +282,37 @@ onMounted(() => {
 }
 
 .contact-section__meta div {
+  position: relative;
   padding: 19.8px 21.6px;
   border: 0.9px solid var(--color-line);
   border-radius: 21.6px;
   background: rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+  transition:
+    transform 0.28s ease,
+    border-color 0.28s ease,
+    background 0.28s ease;
+}
+
+.contact-section__meta div::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 100%;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.68), transparent);
+  transition: right 0.42s cubic-bezier(0.18, 0.95, 0.18, 1);
+}
+
+.contact-section__meta div:hover {
+  transform: translateX(5px);
+  border-color: rgba(244, 241, 234, 0.16);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.contact-section__meta div:hover::after {
+  right: 0;
 }
 
 .contact-section__meta strong {
@@ -282,7 +362,12 @@ onMounted(() => {
   color: var(--color-text);
   font-family: inherit;
   font-size: 12.6px;
-  transition: 0.25s ease;
+  box-shadow: inset 0 0 0 0 rgba(244, 241, 234, 0);
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
 }
 
 .contact-form input,
@@ -302,6 +387,10 @@ onMounted(() => {
 .contact-form textarea:focus {
   border-color: var(--color-line-strong);
   background: rgba(7, 8, 9, 0.82);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 241, 234, 0.08),
+    0 0 24px rgba(210, 220, 235, 0.08);
+  transform: translateY(-1px);
 }
 
 .contact-form input::placeholder,
@@ -310,11 +399,25 @@ onMounted(() => {
 }
 
 .contact-form__notice {
+  position: relative;
   margin-top: 7.2px;
   padding: 16.2px;
   border: 0.9px solid var(--color-line);
   border-radius: 19.8px;
   background: rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+}
+
+.contact-form__notice::before {
+  content: '';
+  position: absolute;
+  left: -20%;
+  top: 0;
+  width: 18%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.08), transparent);
+  transform: skewX(-14deg);
+  animation: contact-notice-scan 5.2s ease-in-out infinite;
 }
 
 .contact-form__notice span {
@@ -334,6 +437,7 @@ onMounted(() => {
 }
 
 .contact-form__button {
+  position: relative;
   margin-top: 21.6px;
   width: 100%;
   height: 48.6px;
@@ -344,11 +448,28 @@ onMounted(() => {
   background: var(--color-text);
   color: #08090a;
   font-size: 12.6px;
+  overflow: hidden;
   transition: 0.25s ease;
+}
+
+.contact-form__button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -24%;
+  width: 18%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.72), transparent);
+  transform: skewX(-16deg);
+  opacity: 0;
 }
 
 .contact-form__button:hover {
   transform: translateY(-1.8px);
+}
+
+.contact-form__button:hover::before {
+  animation: contact-button-send 0.9s ease;
 }
 
 @media (max-width: 882px) {
@@ -366,6 +487,52 @@ onMounted(() => {
   .contact-section__panel,
   .contact-form {
     padding: 25.2px;
+  }
+}
+
+@keyframes contact-check-pulse {
+  0%,
+  100% {
+    opacity: 0.82;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes contact-notice-scan {
+  0%,
+  42% {
+    left: -24%;
+    opacity: 0;
+  }
+
+  55%,
+  68% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 110%;
+    opacity: 0;
+  }
+}
+
+@keyframes contact-button-send {
+  0% {
+    left: -24%;
+    opacity: 0;
+  }
+
+  18%,
+  72% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 108%;
+    opacity: 0;
   }
 }
 </style>

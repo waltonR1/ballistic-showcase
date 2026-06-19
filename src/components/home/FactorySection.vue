@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import gsap from 'gsap'
+import { revealOnScroll } from '@/utils/motion'
 import { assetUrl } from '@/utils/asset'
 
 const sectionRef = ref<HTMLElement | null>(null)
@@ -8,26 +8,13 @@ const sectionRef = ref<HTMLElement | null>(null)
 onMounted(() => {
   if (!sectionRef.value) return
 
-  gsap.fromTo(
-    sectionRef.value.querySelectorAll('.factory-animate'),
-    {
-      autoAlpha: 0,
-      y: 32,
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      ease: 'power3.out',
-      clearProps: 'opacity,visibility,transform',
-      scrollTrigger: {
-        trigger: sectionRef.value,
-        start: 'top 72%',
-        once: true,
-      },
-    },
-  )
+  revealOnScroll(sectionRef.value, '.factory-animate', {
+    y: 92,
+    scale: 0.93,
+    rotateX: 8,
+    stagger: 0.13,
+    duration: 1.1,
+  })
 })
 </script>
 
@@ -39,14 +26,21 @@ onMounted(() => {
       <div>
         <h2>生产能力与质量控制</h2>
         <span>
-          依托中国供应链合作方的生产与加工能力，结合法国团队的销售管理、客户沟通与资料对接，为专业客户提供清晰、可追踪的产品展示与商务支持。</span
-        >
+          依托中国供应链合作方的生产与加工能力，结合法国团队的销售管理、客户沟通与资料对接，为专业客户提供清晰、可追踪的产品展示与商务支持。
+        </span>
       </div>
     </div>
 
     <div class="factory-section__body">
       <div class="factory-section__visual factory-animate">
         <img :src="assetUrl('/images/factory/设备.jpg')" alt="生产设备与工厂环境" />
+
+        <div class="factory-section__inspection" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
         <div class="factory-section__visual-label">
           <span>SUPPLY CHAIN</span>
@@ -103,7 +97,7 @@ onMounted(() => {
 .factory-section {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
-  padding: 108px 0;
+  padding: var(--section-space) 0;
 }
 
 .factory-section__header {
@@ -152,6 +146,45 @@ onMounted(() => {
   border-radius: 34.2px;
   overflow: hidden;
   background: var(--color-card);
+  box-shadow: var(--shadow-panel);
+  transition:
+    border-color 0.34s ease,
+    box-shadow 0.34s ease,
+    transform 0.34s ease;
+}
+
+.factory-section__visual:hover {
+  border-color: rgba(244, 241, 234, 0.24);
+  box-shadow:
+    0 34px 100px rgba(0, 0, 0, 0.44),
+    0 0 70px rgba(210, 220, 235, 0.08);
+  transform: translateY(-2px);
+}
+
+.factory-section__visual::before {
+  content: '';
+  position: absolute;
+  inset: 24px;
+  z-index: 2;
+  pointer-events: none;
+  border: 1px solid rgba(244, 241, 234, 0);
+  border-radius: 22px;
+  background:
+    linear-gradient(90deg, rgba(244, 241, 234, 0.16), transparent 1px),
+    linear-gradient(rgba(244, 241, 234, 0.12), transparent 1px);
+  background-size: 42px 100%, 100% 42px;
+  opacity: 0;
+  transform: scale(0.985);
+  transition:
+    opacity 0.34s ease,
+    border-color 0.34s ease,
+    transform 0.34s ease;
+}
+
+.factory-section__visual:hover::before {
+  border-color: rgba(244, 241, 234, 0.14);
+  opacity: 0.52;
+  transform: scale(1);
 }
 
 .factory-section__visual::after {
@@ -162,6 +195,11 @@ onMounted(() => {
   background:
     linear-gradient(180deg, rgba(7, 8, 9, 0.05) 0%, rgba(7, 8, 9, 0.72) 100%),
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.14), transparent 34%);
+  transition: opacity 0.34s ease;
+}
+
+.factory-section__visual:hover::after {
+  opacity: 0.82;
 }
 
 .factory-section__visual img {
@@ -170,11 +208,122 @@ onMounted(() => {
   min-height: 558px;
   object-fit: cover;
   filter: contrast(1.04) saturate(0.82) brightness(0.82);
+  transform: scale(1);
+  transition:
+    filter 0.6s ease,
+    transform 0.8s cubic-bezier(0.18, 0.95, 0.18, 1);
+}
+
+.factory-section__visual:hover img {
+  filter: contrast(1.12) saturate(0.9) brightness(0.88);
+  transform: scale(1.055);
+}
+
+.factory-section__inspection {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.factory-section__inspection::before {
+  content: '';
+  position: absolute;
+  top: -12%;
+  bottom: -12%;
+  left: -24%;
+  width: 18%;
+  background:
+    linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.18), transparent),
+    linear-gradient(90deg, transparent 0 48%, rgba(244, 241, 234, 0.52) 50%, transparent 52% 100%);
+  filter: blur(0.2px);
+  transform: skewX(-11deg);
+}
+
+.factory-section__inspection::after {
+  content: '';
+  position: absolute;
+  left: 9%;
+  right: 9%;
+  top: 50%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(244, 241, 234, 0.76), transparent);
+  box-shadow:
+    0 -92px 0 rgba(244, 241, 234, 0.08),
+    0 92px 0 rgba(244, 241, 234, 0.08);
+  transform: scaleX(0.3);
+  opacity: 0;
+  transition:
+    opacity 0.3s ease,
+    transform 0.42s cubic-bezier(0.18, 0.95, 0.18, 1);
+}
+
+.factory-section__visual:hover .factory-section__inspection {
+  opacity: 1;
+}
+
+.factory-section__visual:hover .factory-section__inspection::before {
+  animation: factory-inspection-sweep 1.7s cubic-bezier(0.18, 0.95, 0.18, 1) infinite;
+}
+
+.factory-section__visual:hover .factory-section__inspection::after {
+  opacity: 0.86;
+  transform: scaleX(1);
+}
+
+.factory-section__inspection span {
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  border-color: rgba(244, 241, 234, 0.74);
+  opacity: 0;
+  transition:
+    opacity 0.28s ease,
+    transform 0.42s cubic-bezier(0.18, 0.95, 0.18, 1);
+}
+
+.factory-section__inspection span:nth-child(1) {
+  left: 34px;
+  top: 34px;
+  border-top: 1px solid;
+  border-left: 1px solid;
+  transform: translate(12px, 12px);
+}
+
+.factory-section__inspection span:nth-child(2) {
+  right: 34px;
+  top: 34px;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  transform: translate(-12px, 12px);
+}
+
+.factory-section__inspection span:nth-child(3) {
+  right: 34px;
+  bottom: 34px;
+  border-right: 1px solid;
+  border-bottom: 1px solid;
+  transform: translate(-12px, -12px);
+}
+
+.factory-section__inspection span:nth-child(4) {
+  left: 34px;
+  bottom: 34px;
+  border-left: 1px solid;
+  border-bottom: 1px solid;
+  transform: translate(12px, -12px);
+}
+
+.factory-section__visual:hover .factory-section__inspection span {
+  opacity: 1;
+  transform: translate(0, 0);
 }
 
 .factory-section__visual-label {
   position: absolute;
-  z-index: 2;
+  z-index: 4;
   left: 25.2px;
   bottom: 25.2px;
   padding: 14.4px 16.2px;
@@ -182,6 +331,16 @@ onMounted(() => {
   border-radius: 16.2px;
   background: rgba(8, 9, 10, 0.72);
   backdrop-filter: blur(12.6px);
+  transition:
+    border-color 0.3s ease,
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.factory-section__visual:hover .factory-section__visual-label {
+  border-color: rgba(244, 241, 234, 0.2);
+  background: rgba(8, 9, 10, 0.82);
+  transform: translate(8px, -8px);
 }
 
 .factory-section__visual-label span {
@@ -210,7 +369,19 @@ onMounted(() => {
   border-radius: 27px;
   background:
     radial-gradient(circle at top right, rgba(210, 220, 235, 0.08), transparent 38%),
-    var(--color-card);
+    var(--color-surface);
+  transition:
+    transform 0.3s ease,
+    border-color 0.3s ease,
+    background 0.3s ease;
+}
+
+.factory-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-line-strong);
+  background:
+    radial-gradient(circle at top right, rgba(210, 220, 235, 0.12), transparent 42%),
+    var(--color-surface-raised);
 }
 
 .factory-card span {
@@ -238,7 +409,9 @@ onMounted(() => {
   border: 0.9px solid var(--color-line);
   border-radius: 27px;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.025);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
+    rgba(255, 255, 255, 0.025);
 }
 
 .factory-section__metrics div {
@@ -301,6 +474,23 @@ onMounted(() => {
 
   .factory-section__metrics div:last-child {
     border-bottom: none;
+  }
+}
+
+@keyframes factory-inspection-sweep {
+  0% {
+    left: -26%;
+    opacity: 0;
+  }
+
+  18%,
+  72% {
+    opacity: 1;
+  }
+
+  100% {
+    left: 108%;
+    opacity: 0;
   }
 }
 </style>

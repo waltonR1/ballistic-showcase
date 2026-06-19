@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
-import gsap from 'gsap'
 import { products } from '@/data/products'
 import { assetUrl } from '@/utils/asset'
+import { revealOnScroll } from '@/utils/motion'
 
 const sectionRef = ref<HTMLElement | null>(null)
 
@@ -14,46 +14,20 @@ const featuredProducts = computed(() => {
 onMounted(() => {
   if (!sectionRef.value) return
 
-  gsap.fromTo(
-    sectionRef.value.querySelectorAll('.product-card'),
-    {
-      autoAlpha: 0,
-      y: 28,
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      duration: 0.7,
-      stagger: 0.08,
-      ease: 'power3.out',
-      clearProps: 'opacity,visibility,transform',
-      scrollTrigger: {
-        trigger: sectionRef.value,
-        start: 'top 72%',
-        once: true,
-      },
-    },
-  )
+  revealOnScroll(sectionRef.value, '.product-card', {
+    y: 98,
+    scale: 0.9,
+    rotateX: 10,
+    stagger: 0.16,
+    duration: 1.08,
+  })
 
-  gsap.fromTo(
-    sectionRef.value.querySelector('.products__footer'),
-    {
-      autoAlpha: 0,
-      y: 18,
-    },
-    {
-      autoAlpha: 1,
-      y: 0,
-      duration: 0.7,
-      ease: 'power3.out',
-      clearProps: 'opacity,visibility,transform',
-      scrollTrigger: {
-        trigger: sectionRef.value,
-        start: 'top 65%',
-        once: true,
-      },
-    },
-  )
+  revealOnScroll(sectionRef.value, '.products__footer', {
+    y: 56,
+    scale: 0.96,
+    duration: 0.9,
+    delay: 0.1,
+  })
 })
 </script>
 
@@ -63,7 +37,7 @@ onMounted(() => {
       <p>PRODUCT CATEGORIES</p>
 
       <div class="products__header-row">
-        <h2>核心产品系列</h2>
+        <h2>核心防护品类</h2>
 
         <span> 从个人防护到硬质防护组件，面向专业客户提供弹道防护装备展示与资料对接。</span>
       </div>
@@ -101,7 +75,7 @@ onMounted(() => {
     <div class="products__footer">
       <div>
         <strong>更多产品资料可按需提供</strong>
-        <span>防弹插板、防弹芯片、软质防护组件及特殊防护方案可在后续产品页中展示。</span>
+        <span>防弹插板、防弹芯片、软质防护组件及特殊防护方案可进入产品目录查看，并按需求整理资料。</span>
       </div>
 
       <RouterLink class="products__more" to="/products"> 查看全部产品 </RouterLink>
@@ -113,7 +87,7 @@ onMounted(() => {
 .products {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
   margin: 0 auto;
-  padding: 108px 0;
+  padding: var(--section-space) 0;
 }
 
 .products__header {
@@ -158,14 +132,17 @@ onMounted(() => {
 
 .product-card {
   position: relative;
-  min-height: 504px;
+  min-height: 536px;
   border: 0.9px solid var(--color-line);
   border-radius: 30.6px;
   overflow: hidden;
   background:
     linear-gradient(rgba(255, 255, 255, 0.025) 0.9px, transparent 0.9px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0.9px, transparent 0.9px), var(--color-card);
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0.9px, transparent 0.9px),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 42%),
+    var(--color-surface-raised);
   background-size: 28.8px 28.8px;
+  box-shadow: 0 20px 70px rgba(0, 0, 0, 0.18);
   transition:
     transform 0.35s ease,
     border-color 0.35s ease,
@@ -193,8 +170,11 @@ onMounted(() => {
 }
 
 .product-card:hover {
-  transform: translateY(-9px);
-  border-color: var(--color-line-strong);
+  transform: translateY(-14px) scale(1.012);
+  border-color: var(--color-line-hot);
+  box-shadow:
+    0 34px 96px rgba(0, 0, 0, 0.32),
+    0 0 48px rgba(215, 221, 231, 0.08);
 }
 
 .product-card__top {
@@ -218,14 +198,15 @@ onMounted(() => {
 }
 
 .product-card__image {
-  height: 306px;
+  height: 318px;
   padding: 52.2px 30.6px 23.4px;
   display: flex;
   align-items: center;
   justify-content: center;
   background:
-    radial-gradient(circle at center, rgba(210, 220, 235, 0.12), transparent 52%),
-    rgba(255, 255, 255, 0.015);
+    radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.58), transparent 34%),
+    linear-gradient(180deg, rgba(240, 243, 247, 0.22), rgba(120, 130, 145, 0.08)),
+    rgba(255, 255, 255, 0.035);
 }
 
 .product-card__image img {
@@ -233,16 +214,16 @@ onMounted(() => {
   max-height: 100%;
   object-fit: contain;
   transition: 0.45s ease;
-  filter: contrast(1.06) saturate(0.9);
+  filter: contrast(1.08) saturate(0.92) drop-shadow(0 20px 24px rgba(0, 0, 0, 0.34));
 }
 
 .product-card:hover .product-card__image img {
-  transform: scale(1.06) translateY(-3.6px);
+  transform: scale(1.13) translateY(-7px);
 }
 
 .product-card__content {
   padding: 25.2px;
-  background: rgba(12, 15, 18, 0.72);
+  background: rgba(10, 12, 15, 0.86);
   min-height: 147.6px;
 }
 
@@ -284,14 +265,13 @@ onMounted(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 7.2px;
-  opacity: 0;
-  transform: translateY(10.8px);
+  opacity: 0.72;
+  transform: translateY(0);
   transition: 0.3s ease;
 }
 
 .product-card:hover .product-card__tags {
   opacity: 1;
-  transform: translateY(0);
 }
 
 .product-card__tags span {
@@ -312,7 +292,9 @@ onMounted(() => {
   gap: 28.8px;
   border: 0.9px solid var(--color-line);
   border-radius: 27px;
-  background: rgba(255, 255, 255, 0.025);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
+    rgba(255, 255, 255, 0.025);
 }
 
 .products__footer strong {
@@ -376,6 +358,16 @@ onMounted(() => {
   .products__footer {
     flex-direction: column;
     align-items: flex-start;
+  }
+}
+
+@media (max-width: 1188px) and (min-width: 991px) {
+  .products__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .product-card:last-child {
+    grid-column: span 2;
   }
 }
 </style>

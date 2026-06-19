@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router'
       <section class="site-footer__brand">
         <p>铠福科技</p>
         <h3>弹道防护装备展示与资料对接平台</h3>
-        <span>面向法国及欧洲专业客户，展示个人防护、硬质防护与特殊防护产品系列。</span>
+        <span>面向法国及欧洲专业客户，展示个人防护、硬质防护与特殊防护产品目录。</span>
       </section>
 
       <section class="site-footer__group">
@@ -43,8 +43,8 @@ import { RouterLink } from 'vue-router'
 <style scoped>
 .site-footer {
   width: min(calc(100% - (var(--page-gutter) * 2)), var(--container));
-  margin: 0 auto 36px;
-  padding: 43.2px 0 0;
+  margin: 0 auto 32px;
+  padding: 36px 0 0;
   border-top: 0.9px solid var(--color-line);
 }
 
@@ -52,7 +52,11 @@ import { RouterLink } from 'vue-router'
   display: grid;
   grid-template-columns: minmax(260px, 1.35fr) repeat(3, minmax(150px, 0.75fr));
   gap: 43.2px;
-  padding-bottom: 30.6px;
+  padding: 28.8px;
+  border: 0.9px solid var(--color-line);
+  border-radius: 28px;
+  background:
+    linear-gradient(120deg, rgba(255, 255, 255, 0.04), transparent 45%), rgba(255, 255, 255, 0.018);
 }
 
 .site-footer__brand p,
@@ -113,11 +117,10 @@ import { RouterLink } from 'vue-router'
 }
 
 .site-footer__bottom {
-  padding: 18px 0;
+  padding: 18px 4px;
   display: flex;
   justify-content: space-between;
   gap: 18px;
-  border-top: 0.9px solid var(--color-line);
   color: var(--color-text-muted);
   font-size: 10.8px;
 }
