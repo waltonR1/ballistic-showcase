@@ -7,12 +7,12 @@ import { RouterLink } from 'vue-router'
     <div class="site-footer__inner">
       <section class="site-footer__brand">
         <p>铠福科技</p>
-        <h3>弹道防护装备展示与资料对接平台</h3>
-        <span>面向法国及欧洲专业客户，展示个人防护、硬质防护与特殊防护产品目录。</span>
+        <h3>弹道防护装备资料与项目对接平台</h3>
+        <span>面向法国及欧洲专业客户，集中展示防护装备目录、制造支持与资料申请入口。</span>
       </section>
 
       <section class="site-footer__group">
-        <strong>产品入口</strong>
+        <strong>产品目录</strong>
         <RouterLink to="/products/vest">防弹背心</RouterLink>
         <RouterLink to="/products/helmet">防弹头盔</RouterLink>
         <RouterLink to="/products/shield">防弹盾牌</RouterLink>
@@ -20,11 +20,11 @@ import { RouterLink } from 'vue-router'
       </section>
 
       <section class="site-footer__group">
-        <strong>业务说明</strong>
-        <span>中国供应链支持</span>
-        <span>法国销售管理</span>
-        <span>技术资料按需提供</span>
-        <span>具体等级以正式文件为准</span>
+        <strong>服务范围</strong>
+        <RouterLink to="/manufacturing">制造与供货支持</RouterLink>
+        <RouterLink to="/resources">技术资料申请</RouterLink>
+        <RouterLink to="/scenarios">防护方案说明</RouterLink>
+        <span>防护等级以正式文件为准</span>
       </section>
 
       <section class="site-footer__contact">
@@ -35,7 +35,6 @@ import { RouterLink } from 'vue-router'
 
     <div class="site-footer__bottom">
       <span>© 2026 SHANGHAI CAREFUL TECHNOLOGY CO.,LTD</span>
-      <span>Ballistic Protection Equipment Showcase</span>
     </div>
   </footer>
 </template>
@@ -50,13 +49,15 @@ import { RouterLink } from 'vue-router'
 
 .site-footer__inner {
   display: grid;
-  grid-template-columns: minmax(260px, 1.35fr) repeat(3, minmax(150px, 0.75fr));
-  gap: 43.2px;
-  padding: 28.8px;
+  grid-template-columns: minmax(280px, 1.35fr) minmax(150px, 0.72fr) minmax(170px, 0.82fr) minmax(180px, 0.72fr);
+  gap: clamp(28px, 4vw, 56px);
+  padding: 30px 32px;
   border: 0.9px solid var(--color-line);
   border-radius: 28px;
   background:
-    linear-gradient(120deg, rgba(255, 255, 255, 0.04), transparent 45%), rgba(255, 255, 255, 0.018);
+    radial-gradient(circle at 0% 0%, rgba(175, 194, 222, 0.08), transparent 26%),
+    linear-gradient(120deg, rgba(255, 255, 255, 0.04), transparent 45%),
+    rgba(255, 255, 255, 0.018);
 }
 
 .site-footer__brand p,
@@ -71,9 +72,9 @@ import { RouterLink } from 'vue-router'
 }
 
 .site-footer__brand h3 {
-  max-width: 460px;
+  max-width: 520px;
   margin: 0;
-  font-size: 27px;
+  font-size: clamp(23px, 2vw, 29px);
   line-height: 1.12;
   letter-spacing: -0.04em;
 }
@@ -98,7 +99,7 @@ import { RouterLink } from 'vue-router'
 .site-footer__contact {
   display: flex;
   flex-direction: column;
-  gap: 7.2px;
+  gap: 8px;
 }
 
 .site-footer__group a,
@@ -117,10 +118,10 @@ import { RouterLink } from 'vue-router'
 }
 
 .site-footer__bottom {
-  padding: 18px 4px;
+  padding: 18px 4px 0;
   display: flex;
-  justify-content: space-between;
-  gap: 18px;
+  justify-content: center;
+  text-align: center;
   color: var(--color-text-muted);
   font-size: 10.8px;
 }
@@ -138,8 +139,7 @@ import { RouterLink } from 'vue-router'
   }
 
   .site-footer__bottom {
-    flex-direction: column;
-    gap: 7.2px;
+    padding-top: 16px;
   }
 }
 </style>

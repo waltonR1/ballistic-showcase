@@ -46,8 +46,10 @@ onUnmounted(() => {
       <nav class="site-header__nav" :class="{ 'site-header__nav--open': isMenuOpen }">
         <RouterLink to="/" @click="closeMenu">首页</RouterLink>
         <RouterLink to="/products" @click="closeMenu">产品目录</RouterLink>
-        <RouterLink to="/scenarios" @click="closeMenu">应用场景</RouterLink>
-        <RouterLink to="/resources" @click="closeMenu">资料中心</RouterLink>
+        <RouterLink to="/scenarios" @click="closeMenu">防护方案</RouterLink>
+        <RouterLink to="/resources" @click="closeMenu">技术资料</RouterLink>
+        <RouterLink to="/manufacturing" @click="closeMenu">制造能力</RouterLink>
+        <RouterLink to="/contact" @click="closeMenu">联系咨询</RouterLink>
       </nav>
 
       <div class="site-header__actions">
@@ -147,9 +149,10 @@ onUnmounted(() => {
 }
 
 .site-header__text-logo {
-  font-family: var(--font-mono);
-  font-size: 11.7px;
-  letter-spacing: 0.22em;
+  font-family: var(--font-main);
+  font-size: 13px;
+  font-weight: 650;
+  letter-spacing: 0.12em;
   color: var(--color-text);
 }
 
@@ -157,30 +160,41 @@ onUnmounted(() => {
   display: flex;
   align-items: center;
   justify-self: center;
-  gap: 34.2px;
+  gap: clamp(15px, 2vw, 28px);
 }
 
 .site-header__nav a {
   position: relative;
-  font-size: 12.6px;
+  min-height: 34px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 2px;
+  font-size: 13px;
+  font-weight: 560;
+  letter-spacing: 0.04em;
   color: var(--color-text-soft);
-  transition: color 0.25s ease;
+  transition:
+    color 0.25s ease,
+    transform 0.25s ease;
 }
 
 .site-header__nav a::after {
   content: '';
   position: absolute;
   left: 0;
-  bottom: -7.2px;
+  right: 0;
+  bottom: 0;
   width: 0;
-  height: 0.9px;
-  background: var(--color-text);
-  transition: width 0.25s ease;
+  height: 1px;
+  background: linear-gradient(90deg, var(--color-accent-strong), rgba(244, 241, 234, 0.82));
+  box-shadow: 0 0 18px rgba(175, 194, 222, 0.2);
+  transition: width 0.28s ease;
 }
 
 .site-header__nav a:hover,
 .site-header__nav a.router-link-exact-active {
   color: var(--color-text);
+  transform: translateY(-1px);
 }
 
 .site-header__nav a:hover::after,
@@ -294,6 +308,11 @@ onUnmounted(() => {
     border-radius: 21.6px;
     background: rgba(7, 8, 9, 0.92);
     backdrop-filter: blur(16.2px);
+  }
+
+  .site-header__nav a {
+    min-height: 30px;
+    font-size: 13.5px;
   }
 
   .site-header__nav--open {

@@ -5,6 +5,8 @@ import ProductSeriesView from '../views/ProductSeriesView.vue'
 import ProductDetailView from '../views/ProductDetailView.vue'
 import ApplicationScenariosView from '../views/ApplicationScenariosView.vue'
 import ResourceCenterView from '../views/ResourceCenterView.vue'
+import ManufacturingView from '../views/ManufacturingView.vue'
+import ContactView from '../views/ContactView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,6 +30,16 @@ const router = createRouter({
       path: '/resources',
       name: 'resources',
       component: ResourceCenterView,
+    },
+    {
+      path: '/manufacturing',
+      name: 'manufacturing',
+      component: ManufacturingView,
+    },
+    {
+      path: '/contact',
+      name: 'contact',
+      component: ContactView,
     },
     {
       path: '/products/:seriesId',
