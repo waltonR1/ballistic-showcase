@@ -24,9 +24,9 @@ onMounted(() => {
       <p>PRODUCTION & QUALITY</p>
 
       <div>
-        <h2>生产能力与质量控制</h2>
+        <h2>生产支持与质量管理</h2>
         <span>
-          依托中国供应链合作方的生产与加工能力，结合法国团队的销售管理、客户沟通与资料对接，为专业客户提供清晰、可追踪的产品展示与商务支持。
+          通过中国供应链合作资源与法国本地商务团队协同，为专业客户提供从产品展示、参数资料、样品沟通到订单协调的完整支持。
         </span>
       </div>
     </div>
@@ -52,19 +52,19 @@ onMounted(() => {
         <article class="factory-card factory-animate">
           <span>01</span>
           <h3>生产与供货支持</h3>
-          <p>通过中国供应链合作方提供产品生产、样品准备、批量供货及基础资料支持。</p>
+          <p>对接成熟生产资源，支持样品准备、批量供货、基础参数整理及项目交付前沟通。</p>
         </article>
 
         <article class="factory-card factory-animate">
           <span>02</span>
           <h3>产品资料整理</h3>
-          <p>根据客户需求整理产品图片、基础参数、规格说明与技术文件申请流程。</p>
+          <p>根据客户需求提供产品图片、基础参数、规格说明，并协助推进技术文件申请流程。</p>
         </article>
 
         <article class="factory-card factory-animate">
           <span>03</span>
-          <h3>法国销售管理</h3>
-          <p>法国团队负责客户沟通、需求确认、订单协调、资料对接与后续商务跟进。</p>
+          <h3>法国本地商务支持</h3>
+          <p>由法国本地团队负责客户沟通、需求确认、项目协调及后续商务跟进，提升跨境合作效率。</p>
         </article>
       </div>
     </div>
@@ -72,22 +72,22 @@ onMounted(() => {
     <div class="factory-section__metrics factory-animate">
       <div>
         <strong>OEM / ODM</strong>
-        <span>供应链支持</span>
+        <span>定制化生产支持</span>
       </div>
 
       <div>
         <strong>QC</strong>
-        <span>质量检查流程</span>
+        <span>质量检查与记录</span>
       </div>
 
       <div>
         <strong>DOCS</strong>
-        <span>技术资料申请</span>
+        <span>参数与规格资料</span>
       </div>
 
       <div>
         <strong>FR</strong>
-        <span>法国销售管理</span>
+        <span>法国本地支持</span>
       </div>
     </div>
   </section>
@@ -172,7 +172,9 @@ onMounted(() => {
   background:
     linear-gradient(90deg, rgba(244, 241, 234, 0.16), transparent 1px),
     linear-gradient(rgba(244, 241, 234, 0.12), transparent 1px);
-  background-size: 42px 100%, 100% 42px;
+  background-size:
+    42px 100%,
+    100% 42px;
   opacity: 0;
   transform: scale(0.985);
   transition:
@@ -403,6 +405,7 @@ onMounted(() => {
 }
 
 .factory-section__metrics {
+  position: relative;
   margin-top: 19.8px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -412,11 +415,86 @@ onMounted(() => {
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
     rgba(255, 255, 255, 0.025);
+  isolation: isolate;
+}
+
+.factory-section__metrics::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    112deg,
+    transparent 0%,
+    transparent 35%,
+    rgba(244, 241, 234, 0.045) 48%,
+    transparent 62%,
+    transparent 100%
+  );
+  opacity: 0.42;
+  transform: translateX(-72%);
+  animation: factory-metrics-scan 8.6s ease-in-out infinite;
+  z-index: 1;
 }
 
 .factory-section__metrics div {
+  position: relative;
+  z-index: 2;
   padding: 23.4px 25.2px;
   border-right: 0.9px solid var(--color-line);
+  background: rgba(7, 8, 9, 0.16);
+  transition:
+    transform 0.28s ease,
+    background 0.28s ease,
+    box-shadow 0.28s ease;
+}
+
+.factory-section__metrics div::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  left: 25.2px;
+  width: 6px;
+  height: 6px;
+  border: 1px solid rgba(244, 241, 234, 0.34);
+  border-radius: 50%;
+  background: rgba(7, 8, 9, 0.72);
+  box-shadow:
+    0 0 0 0 rgba(244, 241, 234, 0.12),
+    0 0 12px rgba(244, 241, 234, 0.08);
+  animation: factory-node-pulse 2.8s ease-in-out infinite;
+}
+
+.factory-section__metrics div::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at 24% 34%, rgba(244, 241, 234, 0.14), transparent 34%);
+  opacity: 0;
+  transition: opacity 0.28s ease;
+}
+
+.factory-section__metrics div:nth-child(2)::before {
+  animation-delay: 0.45s;
+}
+
+.factory-section__metrics div:nth-child(3)::before {
+  animation-delay: 0.9s;
+}
+
+.factory-section__metrics div:nth-child(4)::before {
+  animation-delay: 1.35s;
+}
+
+.factory-section__metrics div:hover {
+  transform: translateY(-4px);
+  background: rgba(244, 241, 234, 0.055);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.factory-section__metrics div:hover::after {
+  opacity: 1;
 }
 
 .factory-section__metrics div:last-child {
@@ -425,7 +503,7 @@ onMounted(() => {
 
 .factory-section__metrics strong {
   display: block;
-  margin-bottom: 7.2px;
+  margin: 4px 0 7.2px;
   font-family: var(--font-mono);
   font-size: 16.2px;
   letter-spacing: 0.12em;
@@ -468,8 +546,13 @@ onMounted(() => {
   }
 
   .factory-section__metrics div {
+    padding-left: 40px;
     border-right: none;
     border-bottom: 0.9px solid var(--color-line);
+  }
+
+  .factory-section__metrics div::before {
+    left: 15px;
   }
 
   .factory-section__metrics div:last-child {
@@ -491,6 +574,31 @@ onMounted(() => {
   100% {
     left: 108%;
     opacity: 0;
+  }
+}
+
+@keyframes factory-metrics-scan {
+  0%,
+  18% {
+    transform: translateX(-72%);
+  }
+
+  58%,
+  100% {
+    transform: translateX(72%);
+  }
+}
+
+@keyframes factory-node-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(244, 241, 234, 0.12);
+    opacity: 0.7;
+  }
+
+  50% {
+    box-shadow: 0 0 0 8px rgba(244, 241, 234, 0);
+    opacity: 1;
   }
 }
 </style>

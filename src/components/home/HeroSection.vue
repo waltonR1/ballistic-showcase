@@ -66,18 +66,18 @@ onMounted(() => {
         </h1>
 
         <p class="hero__description hero-animate">
-          面向法国及欧洲专业客户，展示防弹背心、头盔、盾牌、插板及软质防护组件，提供产品资料对接与技术文件申请服务。
+          聚焦人员防护与现场处置场景，提供覆盖防弹背心、头盔、盾牌、防护插板及软质防护组件的专业弹道防护产品体系。
         </p>
 
         <div class="hero__actions hero-animate">
           <a class="hero__button hero__button--primary" href="#products">查看产品</a>
-          <a class="hero__button hero__button--secondary" href="#contact">联系我们</a>
+          <a class="hero__button hero__button--secondary" href="#contact">联系咨询</a>
         </div>
 
-        <div class="hero__status hero-animate" aria-label="Showcase capabilities">
-          <span><strong>06</strong> 防护品类</span>
-          <span><strong>CN / FR</strong> 中法对接</span>
-          <span><strong>B2B</strong> 资料支持</span>
+        <div class="hero__status hero-animate" aria-label="Showcase workflow">
+          <span><strong>Catalog</strong> 按防护品类查看核心产品</span>
+          <span><strong>Docs</strong> 获取产品图片、参数与规格资料</span>
+          <span><strong>France</strong> 支持法国及欧洲客户项目沟通</span>
         </div>
       </div>
 
@@ -210,35 +210,51 @@ onMounted(() => {
 .hero__status {
   width: min(100%, 720px);
   margin-top: 36px;
-  padding: 12px;
+  padding: 8px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 8px;
   border: 0.9px solid var(--color-line);
-  border-radius: 22px;
-  background: rgba(255, 255, 255, 0.025);
+  border-radius: 18px;
+  background:
+    linear-gradient(90deg, rgba(244, 241, 234, 0.035), transparent 42%, rgba(174, 185, 200, 0.035)),
+    rgba(255, 255, 255, 0.018);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.035);
 }
 
 .hero__status span {
-  min-height: 58px;
-  padding: 12px 14px;
+  min-height: 54px;
+  padding: 11px 14px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
   border: 0.9px solid rgba(255, 255, 255, 0.055);
-  border-radius: 16px;
-  background: rgba(7, 8, 9, 0.38);
+  border-radius: 14px;
+  background: rgba(7, 8, 9, 0.32);
   color: var(--color-text-muted);
   font-size: 11.7px;
   line-height: 1.35;
+  transition:
+    transform 0.24s ease,
+    border-color 0.24s ease,
+    background 0.24s ease,
+    color 0.24s ease;
+}
+
+.hero__status span:hover {
+  transform: translateY(-2px);
+  border-color: rgba(244, 241, 234, 0.18);
+  background: rgba(244, 241, 234, 0.055);
+  color: var(--color-text-soft);
 }
 
 .hero__status strong {
   color: var(--color-text);
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 10px;
   letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .hero__visual {
@@ -370,7 +386,8 @@ onMounted(() => {
 .hero__visual:hover .hero__armour-system::before {
   opacity: 0.76;
   filter: blur(34px);
-  transform: translate(calc(-50% - (var(--shift-x) * 0.22)), calc(-50% - (var(--shift-y) * 0.18))) scale(1.08);
+  transform: translate(calc(-50% - (var(--shift-x) * 0.22)), calc(-50% - (var(--shift-y) * 0.18)))
+    scale(1.08);
 }
 
 .hero__vest-outline,
@@ -398,12 +415,9 @@ onMounted(() => {
 }
 
 .hero__visual:hover .hero__vest-outline {
-  transform:
-    translate(calc(-50% + (var(--shift-x) * 0.1)), calc(-50% + (var(--shift-y) * 0.08)))
-    translateZ(176px)
-    scale(1.1);
-  filter:
-    drop-shadow(0 46px 44px rgba(0, 0, 0, 0.42))
+  transform: translate(calc(-50% + (var(--shift-x) * 0.1)), calc(-50% + (var(--shift-y) * 0.08)))
+    translateZ(176px) scale(1.1);
+  filter: drop-shadow(0 46px 44px rgba(0, 0, 0, 0.42))
     drop-shadow(0 0 24px rgba(244, 241, 234, 0.1));
 }
 
@@ -506,7 +520,11 @@ onMounted(() => {
 .hero__visual:hover .hero__torso {
   border-color: rgba(244, 241, 234, 0.38);
   background:
-    radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(244, 241, 234, 0.18), transparent 26%),
+    radial-gradient(
+      circle at var(--mouse-x) var(--mouse-y),
+      rgba(244, 241, 234, 0.18),
+      transparent 26%
+    ),
     linear-gradient(90deg, transparent 49.5%, rgba(255, 255, 255, 0.2) 50%, transparent 50.5%),
     linear-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
@@ -638,58 +656,42 @@ onMounted(() => {
 }
 
 .hero__visual:hover .armor-layer--carrier {
-  transform:
-    translate3d(
+  transform: translate3d(
       calc(-50% - 156px - (var(--shift-x) * 0.16)),
       calc(-50% - 78px + (var(--shift-y) * 0.08)),
       -128px
     )
-    rotate(-17deg)
-    rotateX(12deg)
-    rotateY(-10deg)
-    scale(0.82);
+    rotate(-17deg) rotateX(12deg) rotateY(-10deg) scale(0.82);
   opacity: 0.42;
 }
 
 .hero__visual:hover .armor-layer--soft {
-  transform:
-    translate3d(
+  transform: translate3d(
       calc(-50% - 104px + (var(--shift-y) * 0.12)),
       calc(-50% + 112px - (var(--shift-x) * 0.1)),
       -72px
     )
-    rotate(13deg)
-    rotateX(-10deg)
-    rotateY(-8deg)
-    scale(0.9);
+    rotate(13deg) rotateX(-10deg) rotateY(-8deg) scale(0.9);
   opacity: 0.5;
 }
 
 .hero__visual:hover .armor-layer--plate {
-  transform:
-    translate3d(
+  transform: translate3d(
       calc(-50% + 126px - (var(--shift-x) * 0.18)),
       calc(-50% - 106px - (var(--shift-y) * 0.12)),
       -44px
     )
-    rotate(-11deg)
-    rotateX(9deg)
-    rotateY(12deg)
-    scale(0.98);
+    rotate(-11deg) rotateX(9deg) rotateY(12deg) scale(0.98);
   opacity: 0.76;
 }
 
 .hero__visual:hover .armor-layer--buffer {
-  transform:
-    translate3d(
+  transform: translate3d(
       calc(-50% + 172px + (var(--shift-y) * 0.14)),
       calc(-50% + 92px - (var(--shift-x) * 0.12)),
       -152px
     )
-    rotate(18deg)
-    rotateX(-14deg)
-    rotateY(14deg)
-    scale(0.8);
+    rotate(18deg) rotateX(-14deg) rotateY(14deg) scale(0.8);
   opacity: 0.34;
 }
 

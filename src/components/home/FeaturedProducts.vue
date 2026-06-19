@@ -39,7 +39,7 @@ onMounted(() => {
       <div class="products__header-row">
         <h2>核心防护品类</h2>
 
-        <span> 从个人防护到硬质防护组件，面向专业客户提供弹道防护装备展示与资料对接。</span>
+        <span>覆盖穿戴式防护、头部防护与现场防护装备，形成面向专业安防、执法与项目采购场景的弹道防护产品体系。</span>
       </div>
     </div>
 
@@ -74,11 +74,14 @@ onMounted(() => {
 
     <div class="products__footer">
       <div>
-        <strong>更多产品资料可按需提供</strong>
-        <span>防弹插板、防弹芯片、软质防护组件及特殊防护方案可进入产品目录查看，并按需求整理资料。</span>
+        <strong>更多防护组件与项目资料</strong>
+        <span>产品目录涵盖防护插板、软质防护组件、硬质防护面板及定制化防护方案，可根据项目需求提供图片、参数与规格资料。</span>
       </div>
 
-      <RouterLink class="products__more" to="/products"> 查看全部产品 </RouterLink>
+      <RouterLink class="products__more" to="/products">
+        查看全部产品
+        <span aria-hidden="true">→</span>
+      </RouterLink>
     </div>
   </section>
 </template>
@@ -284,6 +287,7 @@ onMounted(() => {
 }
 
 .products__footer {
+  position: relative;
   margin-top: 25.2px;
   padding: 25.2px 28.8px;
   display: flex;
@@ -295,6 +299,62 @@ onMounted(() => {
   background:
     linear-gradient(90deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.018)),
     rgba(255, 255, 255, 0.025);
+  overflow: hidden;
+  transition:
+    border-color 0.3s ease,
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.products__footer::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 50%, rgba(244, 241, 234, 0.1), transparent 24%),
+    linear-gradient(105deg, transparent 0%, transparent 36%, rgba(244, 241, 234, 0.07) 48%, transparent 62%);
+  opacity: 0.5;
+  transform: translateX(-62%);
+  animation: products-footer-scan 8s ease-in-out infinite;
+}
+
+.products__footer::after {
+  content: '';
+  position: absolute;
+  left: 28.8px;
+  right: 28.8px;
+  bottom: 16px;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, rgba(244, 241, 234, 0.22), transparent 72%);
+  opacity: 0.28;
+  transform: scaleX(0.62);
+  transform-origin: left center;
+  transition:
+    opacity 0.3s ease,
+    transform 0.45s cubic-bezier(0.18, 0.95, 0.18, 1);
+}
+
+.products__footer:hover {
+  transform: translateY(-3px);
+  border-color: rgba(244, 241, 234, 0.2);
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.022)),
+    rgba(255, 255, 255, 0.035);
+  box-shadow: 0 22px 60px rgba(0, 0, 0, 0.24);
+}
+
+.products__footer:hover::after {
+  opacity: 0.55;
+  transform: scaleX(1);
+}
+
+.products__footer > div,
+.products__more {
+  position: relative;
+  z-index: 1;
 }
 
 .products__footer strong {
@@ -312,10 +372,11 @@ onMounted(() => {
 .products__more {
   flex-shrink: 0;
   height: 41.4px;
-  padding: 0 19.8px;
+  padding: 0 17.1px 0 19.8px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
   border: 0.9px solid var(--color-line-strong);
   border-radius: 899.1px;
   font-size: 12.6px;
@@ -323,10 +384,21 @@ onMounted(() => {
   transition: 0.25s ease;
 }
 
+.products__more span {
+  display: inline-block;
+  font-family: var(--font-mono);
+  transform: translateX(0);
+  transition: transform 0.25s ease;
+}
+
 .products__more:hover {
   background: var(--color-text);
   color: #08090a;
   transform: translateY(-1.8px);
+}
+
+.products__more:hover span {
+  transform: translateX(3px);
 }
 
 @media (max-width: 990px) {
@@ -359,6 +431,11 @@ onMounted(() => {
     flex-direction: column;
     align-items: flex-start;
   }
+
+  .products__footer::after {
+    left: 25.2px;
+    right: 25.2px;
+  }
 }
 
 @media (max-width: 1188px) and (min-width: 991px) {
@@ -368,6 +445,18 @@ onMounted(() => {
 
   .product-card:last-child {
     grid-column: span 2;
+  }
+}
+
+@keyframes products-footer-scan {
+  0%,
+  24% {
+    transform: translateX(-62%);
+  }
+
+  68%,
+  100% {
+    transform: translateX(62%);
   }
 }
 </style>

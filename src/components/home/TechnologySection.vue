@@ -35,7 +35,7 @@ const layers = [
   {
     index: '01',
     title: '外层面料',
-    desc: '用于装备外部耐磨、防污与基础结构保护',
+    desc: '用于装备外部覆盖、耐磨保护与基础结构支撑',
   },
   {
     index: '02',
@@ -45,27 +45,27 @@ const layers = [
   {
     index: '03',
     title: '硬质防护模块',
-    desc: '适用于防弹插板、盾牌等硬质防护组件',
+    desc: '适用于防护插板、盾牌及硬质防护面板等产品配置',
   },
   {
     index: '04',
     title: '缓冲与贴合结构',
-    desc: '提升穿戴稳定性、舒适性与装备系统适配能力',
+    desc: '通过结构设计与工艺配合，提升穿戴稳定性、贴合度与使用舒适性',
   },
 ]
 
 const features = [
   {
     title: '材料选择',
-    desc: '根据防护场景、重量要求与产品结构，对接不同材料方案',
+    desc: '根据防护场景、重量要求与产品结构，匹配相应材料方案',
   },
   {
     title: '结构配置',
-    desc: '支持背心、头盔、插板、盾牌及软质组件等多类型产品资料整理',
+    desc: '支持背心、头盔、插板、盾牌及软质组件等多类型产品配置',
   },
   {
     title: '文件支持',
-    desc: '可根据专业客户需求申请参数表、规格说明、测试信息及产品图片资料',
+    desc: '可根据项目需求提供产品图片、规格参数、测试信息及相关资料',
   },
 ]
 
@@ -99,9 +99,9 @@ onMounted(() => {
 
       <div>
         <h2>材料与防护技术</h2>
-        <span>
-          围绕弹道防护装备的材料结构、产品配置与技术资料对接，建立清晰、克制、专业的展示逻辑。具体防护等级、测试标准与认证文件以正式资料为准。
-     </span>
+        <span
+          >围绕弹道防护装备的材料选型、结构组合与产品配置，展示软质防护、硬质防护及复合结构的基础逻辑。具体防护等级、测试标准与认证文件以正式资料为准。</span
+        >
       </div>
     </div>
 
@@ -109,26 +109,27 @@ onMounted(() => {
       <div
         class="technology-section__visual tech-animate"
         @pointermove="handleTechPointer"
-        @pointerleave="resetTechPointer">
+        @pointerleave="resetTechPointer"
+      >
         <div class="tech-plate">
           <div class="tech-plate__glow"></div>
 
           <div class="tech-plate__stack" aria-label="四层复合防护结构示意">
             <span class="tech-plate__slice tech-plate__slice--01">
               <b></b>
-           </span>
+            </span>
 
             <span class="tech-plate__slice tech-plate__slice--02">
               <b></b>
-           </span>
+            </span>
 
             <span class="tech-plate__slice tech-plate__slice--03">
               <b></b>
-           </span>
+            </span>
 
             <span class="tech-plate__slice tech-plate__slice--04">
               <b></b>
-           </span>
+            </span>
           </div>
 
           <div class="tech-plate__caption">
@@ -156,17 +157,6 @@ onMounted(() => {
         <p>{{ feature.desc }}</p>
       </article>
     </div>
-
-    <div class="technology-section__notice tech-animate">
-      <div>
-        <p>DOCUMENTATION</p>
-        <h3>技术资料按需申请</h3>
-      </div>
-
-      <span>
-        本页展示产品类别与基础能力。具体防护等级、测试文件、认证资料、规格参数与报价信息，以正式资料对接结果为准。
-     </span>
-    </div>
   </section>
 </template>
 
@@ -181,8 +171,7 @@ onMounted(() => {
   margin-bottom: 41.4px;
 }
 
-.technology-section__header > p,
-.technology-section__notice p {
+.technology-section__header > p {
   margin: 0 0 14.4px;
   font-family: var(--font-mono);
   font-size: 10.8px;
@@ -420,8 +409,18 @@ onMounted(() => {
 
 .tech-plate__slice--02 b {
   background:
-    repeating-linear-gradient(92deg, transparent 0 13px, rgba(244, 241, 234, 0.16) 13px 14px, transparent 14px 28px),
-    repeating-linear-gradient(88deg, transparent 0 20px, rgba(174, 185, 200, 0.12) 20px 21px, transparent 21px 38px);
+    repeating-linear-gradient(
+      92deg,
+      transparent 0 13px,
+      rgba(244, 241, 234, 0.16) 13px 14px,
+      transparent 14px 28px
+    ),
+    repeating-linear-gradient(
+      88deg,
+      transparent 0 20px,
+      rgba(174, 185, 200, 0.12) 20px 21px,
+      transparent 21px 38px
+    );
   mask-image: radial-gradient(ellipse at center, black, transparent 76%);
 }
 
@@ -451,7 +450,9 @@ onMounted(() => {
   background:
     radial-gradient(circle at 26px 26px, rgba(244, 241, 234, 0.1) 0 2px, transparent 2px 18px),
     linear-gradient(180deg, rgba(18, 21, 24, 0.88), rgba(6, 7, 9, 0.9));
-  background-size: 38px 38px, auto;
+  background-size:
+    38px 38px,
+    auto;
   transform: translate(-50%, -50%) translate3d(58px, 50px, 0) rotate(4deg);
   opacity: 0.72;
 }
@@ -460,8 +461,18 @@ onMounted(() => {
   inset: 18px;
   border-radius: 18px;
   background:
-    linear-gradient(30deg, transparent 0 42%, rgba(244, 241, 234, 0.08) 42% 44%, transparent 44% 100%),
-    linear-gradient(150deg, transparent 0 42%, rgba(244, 241, 234, 0.08) 42% 44%, transparent 44% 100%);
+    linear-gradient(
+      30deg,
+      transparent 0 42%,
+      rgba(244, 241, 234, 0.08) 42% 44%,
+      transparent 44% 100%
+    ),
+    linear-gradient(
+      150deg,
+      transparent 0 42%,
+      rgba(244, 241, 234, 0.08) 42% 44%,
+      transparent 44% 100%
+    );
   background-size: 46px 46px;
   opacity: 0.78;
 }
@@ -574,7 +585,8 @@ onMounted(() => {
   border-radius: 50%;
   background: rgba(244, 241, 234, 0.2);
   box-shadow: 0 0 16px rgba(244, 241, 234, 0.38);
-  transform: rotate(var(--connector-angle)) translateX(calc(var(--connector-length) * -1)) scale(0.4);
+  transform: rotate(var(--connector-angle)) translateX(calc(var(--connector-length) * -1))
+    scale(0.4);
 }
 
 .technology-section__body:hover .layer-card::before,
@@ -684,36 +696,10 @@ onMounted(() => {
   color: var(--color-text-soft);
 }
 
-.technology-section__notice {
-  margin-top: 19.8px;
-  padding: 32.4px;
-  display: grid;
-  grid-template-columns: 0.85fr 1.15fr;
-  gap: 37.8px;
-  align-items: center;
-  border: 0.9px solid var(--color-line);
-  border-radius: 28.8px;
-  background:
-    radial-gradient(circle at top right, rgba(210, 220, 235, 0.08), transparent 34%),
-    rgba(255, 255, 255, 0.025);
-}
-
-.technology-section__notice h3 {
-  margin: 0;
-  font-size: 30.6px;
-  letter-spacing: -0.05em;
-}
-
-.technology-section__notice > span {
-  line-height: 1.9;
-  color: var(--color-text-soft);
-}
-
 @media (max-width: 882px) {
   .technology-section__header > div,
   .technology-section__body,
-  .technology-section__features,
-  .technology-section__notice {
+  .technology-section__features {
     grid-template-columns: 1fr;
   }
 
@@ -794,5 +780,4 @@ onMounted(() => {
     transform: rotate(-7deg) translateY(-8px);
   }
 }
-
 </style>

@@ -34,7 +34,7 @@ import { RouterLink } from 'vue-router'
     </div>
 
     <div class="site-footer__bottom">
-      <span>© 2026 铠福科技</span>
+      <span>© 2026 SHANGHAI CAREFUL TECHNOLOGY CO.,LTD</span>
       <span>Ballistic Protection Equipment Showcase</span>
     </div>
   </footer>
