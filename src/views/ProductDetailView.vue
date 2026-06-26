@@ -3,11 +3,22 @@ import { computed, onMounted, ref, watch } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import gsap from 'gsap'
 import { getProductVariant } from '@/data/products'
+import {
+  productApplications,
+  productName,
+  productSpecs,
+  useI18n,
+  variantDescription,
+  variantName,
+  variantSecondaryName,
+  variantTags,
+} from '@/i18n'
 import { assetUrl } from '@/utils/asset'
 
 const route = useRoute()
 const pageRef = ref<HTMLElement | null>(null)
 const activeImage = ref('')
+const { t } = useI18n()
 
 const productResult = computed(() => {
   return getProductVariant(String(route.params.seriesId), String(route.params.variantId))
@@ -44,33 +55,33 @@ onMounted(() => {
       <section class="product-hero">
         <div class="product-hero__content detail-animate">
           <div class="product-hero__breadcrumb">
-            <RouterLink to="/">首页</RouterLink>
+            <RouterLink to="/">{{ t('breadcrumbHome') }}</RouterLink>
             <span>/</span>
-            <RouterLink to="/products">产品目录</RouterLink>
+            <RouterLink to="/products">{{ t('breadcrumbProducts') }}</RouterLink>
             <span>/</span>
-            <RouterLink :to="`/products/${series.id}`">{{ series.nameZh }}</RouterLink>
+            <RouterLink :to="`/products/${series.id}`">{{ productName(series) }}</RouterLink>
             <span>/</span>
-            <strong>{{ variant.nameZh }}</strong>
+            <strong>{{ variantName(series, variant) }}</strong>
           </div>
 
           <p class="product-hero__eyebrow">{{ series.eyebrow }}</p>
 
           <h1>
-            {{ variant.nameZh }}
-            <span>{{ variant.nameFr || series.nameFr }}</span>
+            {{ variantName(series, variant) }}
+            <span>{{ variantSecondaryName(series, variant) }}</span>
           </h1>
 
           <p class="product-hero__description">
-            {{ variant.descriptionZh }}
+            {{ variantDescription(series, variant) }}
           </p>
 
           <div class="product-hero__tags">
-            <span v-for="tag in variant.tags" :key="tag">{{ tag }}</span>
+            <span v-for="tag in variantTags(series, variant)" :key="tag">{{ tag }}</span>
           </div>
 
           <div class="product-hero__actions">
-            <a href="mailto:contact@example.com">申请技术资料</a>
-            <RouterLink :to="`/products/${series.id}`">返回系列产品</RouterLink>
+            <a href="mailto:contact@example.com">{{ t('requestDocs') }}</a>
+            <RouterLink :to="`/products/${series.id}`">{{ t('backSeries') }}</RouterLink>
           </div>
         </div>
 
@@ -78,10 +89,10 @@ onMounted(() => {
           <div class="product-gallery__stage">
             <div class="product-gallery__top">
               <span>PRODUCT VISUAL</span>
-              <strong>{{ gallery.length }} IMAGES</strong>
+              <strong>{{ gallery.length }} {{ t('images') }}</strong>
             </div>
 
-            <img v-if="activeImage" :src="assetUrl(activeImage)" :alt="variant.nameZh" />
+            <img v-if="activeImage" :src="assetUrl(activeImage)" :alt="variantName(series, variant)" />
           </div>
 
           <div v-if="gallery.length > 1" class="product-gallery__thumbs">
@@ -92,7 +103,7 @@ onMounted(() => {
               :class="{ 'product-gallery__thumb--active': image === activeImage }"
               @click="activeImage = image"
             >
-              <img :src="assetUrl(image)" :alt="variant.nameZh" />
+              <img :src="assetUrl(image)" :alt="variantName(series, variant)" />
             </button>
           </div>
         </div>
@@ -101,11 +112,11 @@ onMounted(() => {
       <section class="product-overview">
         <article class="overview-card overview-card--large detail-animate">
           <p>TECHNICAL OVERVIEW</p>
-          <h2>基础参数</h2>
+          <h2>{{ t('technicalOverview') }}</h2>
 
           <div class="spec-list">
             <div
-              v-for="spec in variant.specs?.length ? variant.specs : series.specs"
+              v-for="spec in variant.specs?.length ? variant.specs : productSpecs(series)"
               :key="spec.label"
               class="spec-list__item"
             >
@@ -117,10 +128,10 @@ onMounted(() => {
 
         <article class="overview-card detail-animate">
           <p>SERIES</p>
-          <h2>{{ series.nameZh }}</h2>
+          <h2>{{ productName(series) }}</h2>
 
           <div class="application-list">
-            <span v-for="item in series.applications" :key="item">
+            <span v-for="item in productApplications(series)" :key="item">
               {{ item }}
             </span>
           </div>
@@ -130,28 +141,28 @@ onMounted(() => {
       <section class="product-notice detail-animate">
         <div>
           <p>PROFESSIONAL ENQUIRY</p>
-          <h2>面向专业客户的资料对接</h2>
+          <h2>{{ t('professionalInquiryTitle') }}</h2>
         </div>
 
         <span>
-          页面仅用于产品展示与初步资料说明。具体防护等级、材料结构、测试文件、认证资料与报价信息，建议通过正式商务沟通确认。</span
+          {{ t('professionalInquiryDesc') }}</span
         >
       </section>
 
       <section class="product-cta detail-animate">
         <div>
           <p>REQUEST INFORMATION</p>
-          <h2>需要该产品的技术资料？</h2>
-          <span>可通过邮件联系销售团队，申请产品参数、图片资料、规格文件或进一步商务沟通。</span>
+          <h2>{{ t('requestInfoTitle') }}</h2>
+          <span>{{ t('requestInfoDesc') }}</span>
         </div>
 
-        <a href="mailto:contact@example.com">发送咨询邮件</a>
+        <a href="mailto:contact@example.com">{{ t('sendInquiryEmail') }}</a>
       </section>
     </template>
 
     <section v-else class="not-found">
-      <h1>产品不存在</h1>
-      <RouterLink to="/products">返回产品目录</RouterLink>
+      <h1>{{ t('productNotFound') }}</h1>
+      <RouterLink to="/products">{{ t('backProducts') }}</RouterLink>
     </section>
   </main>
 </template>

@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { revealOnScroll } from '@/utils/motion'
+import { useI18n, useStaticLists } from '@/i18n'
 
 const sectionRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
+const lists = useStaticLists()
 
 function handleTechPointer(event: PointerEvent) {
   const panel = event.currentTarget as HTMLElement
@@ -31,43 +34,8 @@ function resetTechPointer(event: PointerEvent) {
   panel.style.setProperty('--shift-y', '0px')
 }
 
-const layers = [
-  {
-    index: '01',
-    title: '外层面料',
-    desc: '用于装备外部覆盖、耐磨保护与基础结构支撑',
-  },
-  {
-    index: '02',
-    title: '软质防护层',
-    desc: '可根据产品需求采用芳纶、UHMWPE 等软质防护材料',
-  },
-  {
-    index: '03',
-    title: '硬质防护模块',
-    desc: '适用于防护插板、盾牌及硬质防护面板等产品配置',
-  },
-  {
-    index: '04',
-    title: '缓冲与贴合结构',
-    desc: '通过结构设计与工艺配合，提升穿戴稳定性、贴合度与使用舒适性',
-  },
-]
-
-const features = [
-  {
-    title: '材料选择',
-    desc: '根据防护场景、重量要求与产品结构，匹配相应材料方案',
-  },
-  {
-    title: '结构配置',
-    desc: '支持背心、头盔、插板、盾牌及软质组件等多类型产品配置',
-  },
-  {
-    title: '文件支持',
-    desc: '可根据项目需求提供产品图片、规格参数、测试信息及相关资料',
-  },
-]
+const layers = computed(() => lists.techLayers())
+const features = computed(() => lists.techFeatures())
 
 onMounted(() => {
   if (!sectionRef.value) return
@@ -98,9 +66,9 @@ onMounted(() => {
       <p>PROTECTION TECHNOLOGY</p>
 
       <div>
-        <h2>材料与防护技术</h2>
+        <h2>{{ t('techTitle') }}</h2>
         <span
-          >围绕弹道防护装备的材料选型、结构组合与产品配置，展示软质防护、硬质防护及复合结构的基础逻辑。具体防护等级、测试标准与认证文件以正式资料为准。</span
+          >{{ t('techDescription') }}</span
         >
       </div>
     </div>
@@ -114,7 +82,7 @@ onMounted(() => {
         <div class="tech-plate">
           <div class="tech-plate__glow"></div>
 
-          <div class="tech-plate__stack" aria-label="四层复合防护结构示意">
+          <div class="tech-plate__stack" :aria-label="t('techStructureLabel')">
             <span class="tech-plate__slice tech-plate__slice--01">
               <b></b>
             </span>

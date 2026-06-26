@@ -2,10 +2,18 @@
 import { computed, onMounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { products } from '@/data/products'
+import {
+  productDescription,
+  productName,
+  productSecondaryName,
+  productTags,
+  useI18n,
+} from '@/i18n'
 import { assetUrl } from '@/utils/asset'
 import { revealOnScroll } from '@/utils/motion'
 
 const sectionRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
 
 const featuredProducts = computed(() => {
   return products.slice(0, 3)
@@ -37,9 +45,9 @@ onMounted(() => {
       <p>PRODUCT CATEGORIES</p>
 
       <div class="products__header-row">
-        <h2>核心防护品类</h2>
+        <h2>{{ t('productsTitle') }}</h2>
 
-        <span>覆盖穿戴式防护、头部防护与现场防护装备，形成面向专业安防、执法与项目采购场景的弹道防护产品体系。</span>
+        <span>{{ t('productsDescription') }}</span>
       </div>
     </div>
 
@@ -56,30 +64,30 @@ onMounted(() => {
         </div>
 
         <div class="product-card__image">
-          <img :src="assetUrl(item.image)" :alt="item.nameZh" />
+          <img :src="assetUrl(item.image)" :alt="productName(item)" />
         </div>
 
         <div class="product-card__content">
-          <p>{{ item.nameFr }}</p>
-          <h3>{{ item.nameZh }}</h3>
-          <span>{{ item.descriptionZh }}</span>
-          <strong>{{ item.variants.length }} 个产品</strong>
+          <p>{{ productSecondaryName(item) }}</p>
+          <h3>{{ productName(item) }}</h3>
+          <span>{{ productDescription(item) }}</span>
+          <strong>{{ item.variants.length }} {{ t('productCount') }}</strong>
         </div>
 
         <div class="product-card__tags">
-          <span v-for="tag in item.tags" :key="tag">{{ tag }}</span>
+          <span v-for="tag in productTags(item)" :key="tag">{{ tag }}</span>
         </div>
       </RouterLink>
     </div>
 
     <div class="products__footer">
       <div>
-        <strong>更多防护组件与项目资料</strong>
-        <span>产品目录涵盖防护插板、软质防护组件、硬质防护面板及定制化防护方案，可根据项目需求提供图片、参数与规格资料。</span>
+        <strong>{{ t('productsFooterTitle') }}</strong>
+        <span>{{ t('productsFooterDescription') }}</span>
       </div>
 
       <RouterLink class="products__more" to="/products">
-        查看全部产品
+        {{ t('viewAllProducts') }}
         <span aria-hidden="true">→</span>
       </RouterLink>
     </div>

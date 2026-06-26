@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import { useI18n } from '@/i18n'
 
 const isScrolled = ref(false)
 const isMenuOpen = ref(false)
-const currentLocale = ref<'CN' | 'FR'>('CN')
 const scrollProgress = ref(0)
+const { locale, t, toggleLocale } = useI18n()
 
 function handleScroll() {
   const scrollTop = window.scrollY
@@ -17,10 +18,6 @@ function handleScroll() {
 
 function closeMenu() {
   isMenuOpen.value = false
-}
-
-function toggleLocale() {
-  currentLocale.value = currentLocale.value === 'CN' ? 'FR' : 'CN'
 }
 
 onMounted(() => {
@@ -39,39 +36,39 @@ onUnmounted(() => {
   <header class="site-header" :class="{ 'site-header--scrolled': isScrolled }">
     <div class="site-header__inner">
       <RouterLink to="/" class="site-header__brand" @click="closeMenu">
-        <img src="/favicon.ico" alt="铠福科技" class="site-header__logo" />
-        <span class="site-header__text-logo">铠福科技</span>
+        <img src="/favicon.ico" :alt="t('brand')" class="site-header__logo" />
+        <span class="site-header__text-logo">{{ t('brand') }}</span>
       </RouterLink>
 
       <nav class="site-header__nav" :class="{ 'site-header__nav--open': isMenuOpen }">
-        <RouterLink to="/" @click="closeMenu">首页</RouterLink>
-        <RouterLink to="/products" @click="closeMenu">产品目录</RouterLink>
-        <RouterLink to="/scenarios" @click="closeMenu">防护方案</RouterLink>
-        <RouterLink to="/resources" @click="closeMenu">技术资料</RouterLink>
-        <RouterLink to="/manufacturing" @click="closeMenu">制造能力</RouterLink>
-        <RouterLink to="/contact" @click="closeMenu">联系咨询</RouterLink>
+        <RouterLink to="/" @click="closeMenu">{{ t('navHome') }}</RouterLink>
+        <RouterLink to="/products" @click="closeMenu">{{ t('navProducts') }}</RouterLink>
+        <RouterLink to="/scenarios" @click="closeMenu">{{ t('navScenarios') }}</RouterLink>
+        <RouterLink to="/resources" @click="closeMenu">{{ t('navResources') }}</RouterLink>
+        <RouterLink to="/manufacturing" @click="closeMenu">{{ t('navManufacturing') }}</RouterLink>
+        <RouterLink to="/contact" @click="closeMenu">{{ t('navContact') }}</RouterLink>
       </nav>
 
       <div class="site-header__actions">
         <button
           class="site-header__language"
           type="button"
-          aria-label="语言切换"
+          :aria-label="t('languageLabel')"
           title="Language"
           @click="toggleLocale"
         >
           <span class="site-header__language-icon">文</span>
           <span class="site-header__language-options">
-            <strong :class="{ 'is-active': currentLocale === 'CN' }">CN</strong>
+            <strong :class="{ 'is-active': locale === 'CN' }">CN</strong>
             <i>/</i>
-            <strong :class="{ 'is-active': currentLocale === 'FR' }">FR</strong>
+            <strong :class="{ 'is-active': locale === 'FR' }">FR</strong>
           </span>
         </button>
 
         <button
           class="site-header__menu-button"
           type="button"
-          aria-label="打开导航"
+          :aria-label="t('menuLabel')"
           @click="isMenuOpen = !isMenuOpen"
         >
           <span></span>

@@ -1,6 +1,11 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import FactorySection from '@/components/home/FactorySection.vue'
+import { useI18n, useStaticLists } from '@/i18n'
 import { assetUrl } from '@/utils/asset'
+
+const { t } = useI18n()
+const lists = useStaticLists()
 
 const factoryGallery = [
   {
@@ -64,26 +69,34 @@ const factoryGallery = [
     image: '/images/factory/设备.jpg',
   },
 ]
+
+const localizedFactoryGallery = computed(() => {
+  const titles = lists.factoryGalleryTitles()
+  return factoryGallery.map((item, index) => ({
+    ...item,
+    title: titles[index] ?? item.title,
+  }))
+})
 </script>
 
 <template>
   <main class="standalone-page">
     <FactorySection />
 
-    <section class="factory-gallery" aria-label="生产现场图片">
+    <section class="factory-gallery" :aria-label="t('factorySiteLabel')">
       <div class="factory-gallery__header">
         <p>FACTORY SITE</p>
 
         <div>
-          <h2>生产现场与工艺环境</h2>
+          <h2>{{ t('factorySiteTitle') }}</h2>
           <span>
-            补充展示材料处理、裁切、压制与装甲板加工等生产环节，便于专业客户了解供货与样品沟通背后的基础制造环境。
+            {{ t('factorySiteDescription') }}
           </span>
         </div>
       </div>
 
       <div class="factory-gallery__grid">
-        <article v-for="(item, index) in factoryGallery" :key="item.image" class="factory-shot">
+        <article v-for="(item, index) in localizedFactoryGallery" :key="item.image" class="factory-shot">
           <img :src="assetUrl(item.image)" :alt="item.title" />
 
           <div class="factory-shot__meta">

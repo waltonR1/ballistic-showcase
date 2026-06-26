@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import gsap from 'gsap'
+import { useI18n } from '@/i18n'
 
 const heroRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
 
 function handleHeroPointer(event: PointerEvent) {
   const panel = event.currentTarget as HTMLElement
@@ -59,31 +61,31 @@ onMounted(() => {
   <section ref="heroRef" class="hero">
     <div class="hero__inner">
       <div class="hero__content">
-        <p class="hero__eyebrow hero-animate">铠福科技</p>
+        <p class="hero__eyebrow hero-animate">{{ t('brand') }}</p>
 
         <h1 class="hero__title hero-animate">
-          <span>弹道防护装备</span>
+          <span>{{ t('heroTitle') }}</span>
         </h1>
 
         <p class="hero__description hero-animate">
-          聚焦人员防护与现场处置场景，提供覆盖防弹背心、头盔、盾牌、防护插板及软质防护组件的专业弹道防护产品体系。
+          {{ t('heroDescription') }}
         </p>
 
         <div class="hero__actions hero-animate">
-          <a class="hero__button hero__button--primary" href="#products">查看产品</a>
-          <a class="hero__button hero__button--secondary" href="#contact">联系咨询</a>
+          <a class="hero__button hero__button--primary" href="#products">{{ t('viewProducts') }}</a>
+          <a class="hero__button hero__button--secondary" href="#contact">{{ t('contactInquiry') }}</a>
         </div>
 
         <div class="hero__status hero-animate" aria-label="Showcase workflow">
-          <span><strong>Catalog</strong> 按防护品类查看核心产品</span>
-          <span><strong>Docs</strong> 获取产品图片、参数与规格资料</span>
-          <span><strong>France</strong> 支持法国及欧洲客户项目沟通</span>
+          <span><strong>Catalog</strong> {{ t('heroStatusCatalog') }}</span>
+          <span><strong>Docs</strong> {{ t('heroStatusDocs') }}</span>
+          <span><strong>France</strong> {{ t('heroStatusFrance') }}</span>
         </div>
       </div>
 
       <div
         class="hero__visual hero-animate"
-        aria-label="弹道防护装备展示动画"
+        :aria-label="t('heroVisualLabel')"
         @pointermove="handleHeroPointer"
         @pointerleave="resetHeroPointer"
       >

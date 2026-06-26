@@ -2,8 +2,10 @@
 import { onMounted, ref } from 'vue'
 import { revealOnScroll } from '@/utils/motion'
 import { assetUrl } from '@/utils/asset'
+import { useI18n } from '@/i18n'
 
 const sectionRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
 
 onMounted(() => {
   if (!sectionRef.value) return
@@ -24,16 +26,16 @@ onMounted(() => {
       <p>PRODUCTION & QUALITY</p>
 
       <div>
-        <h2>生产支持与质量管理</h2>
+        <h2>{{ t('factoryTitle') }}</h2>
         <span>
-          通过中国供应链合作资源与法国本地商务团队协同，为专业客户提供从产品展示、参数资料、样品沟通到订单协调的完整支持。
+          {{ t('factoryDescription') }}
         </span>
       </div>
     </div>
 
     <div class="factory-section__body">
       <div class="factory-section__visual factory-animate">
-        <img :src="assetUrl('/images/factory/设备.jpg')" alt="生产设备与工厂环境" />
+        <img :src="assetUrl('/images/factory/设备.jpg')" :alt="t('factoryImageAlt')" />
 
         <div class="factory-section__inspection" aria-hidden="true">
           <span></span>
@@ -51,20 +53,20 @@ onMounted(() => {
       <div class="factory-section__cards">
         <article class="factory-card factory-animate">
           <span>01</span>
-          <h3>生产与供货支持</h3>
-          <p>对接成熟生产资源，支持样品准备、批量供货、基础参数整理及项目交付前沟通。</p>
+          <h3>{{ t('factoryCard1Title') }}</h3>
+          <p>{{ t('factoryCard1Desc') }}</p>
         </article>
 
         <article class="factory-card factory-animate">
           <span>02</span>
-          <h3>产品资料整理</h3>
-          <p>根据客户需求提供产品图片、基础参数、规格说明，并协助推进技术文件申请流程。</p>
+          <h3>{{ t('factoryCard2Title') }}</h3>
+          <p>{{ t('factoryCard2Desc') }}</p>
         </article>
 
         <article class="factory-card factory-animate">
           <span>03</span>
-          <h3>法国本地商务支持</h3>
-          <p>由法国本地团队负责客户沟通、需求确认、项目协调及后续商务跟进，提升跨境合作效率。</p>
+          <h3>{{ t('factoryCard3Title') }}</h3>
+          <p>{{ t('factoryCard3Desc') }}</p>
         </article>
       </div>
     </div>
@@ -72,22 +74,22 @@ onMounted(() => {
     <div class="factory-section__metrics factory-animate">
       <div>
         <strong>OEM / ODM</strong>
-        <span>定制化生产支持</span>
+        <span>{{ t('metricOem') }}</span>
       </div>
 
       <div>
         <strong>QC</strong>
-        <span>质量检查与记录</span>
+        <span>{{ t('metricQc') }}</span>
       </div>
 
       <div>
         <strong>DOCS</strong>
-        <span>参数与规格资料</span>
+        <span>{{ t('metricDocs') }}</span>
       </div>
 
       <div>
         <strong>FR</strong>
-        <span>法国本地支持</span>
+        <span>{{ t('metricFr') }}</span>
       </div>
     </div>
   </section>

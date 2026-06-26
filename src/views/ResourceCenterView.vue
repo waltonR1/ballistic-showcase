@@ -1,28 +1,25 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n, useStaticLists } from '@/i18n'
+
+const { t } = useI18n()
+const lists = useStaticLists()
+const resources = computed(() => lists.resources())
+</script>
+
 <template>
   <main class="resource-page">
     <section class="resource-hero">
       <p>RESOURCE CENTER</p>
-      <h1>资料中心</h1>
-      <span>集中说明产品资料、技术文件和商务沟通的申请方式。正式文件与参数以后续确认为准。</span>
+      <h1>{{ t('resourcesTitle') }}</h1>
+      <span>{{ t('resourcesDescription') }}</span>
     </section>
 
-    <section class="resource-list" aria-label="资料中心内容">
-      <article>
-        <strong>产品目录</strong>
-        <h2>产品图片与基础信息</h2>
-        <p>可按产品目录整理图片、型号说明、应用场景和基础配置资料。</p>
-      </article>
-
-      <article>
-        <strong>技术文件</strong>
-        <h2>规格与测试资料申请</h2>
-        <p>具体防护等级、测试标准、认证文件和规格参数需通过正式沟通确认。</p>
-      </article>
-
-      <article>
-        <strong>商务沟通</strong>
-        <h2>采购需求与资料对接</h2>
-        <p>可根据客户使用场景、数量范围和目标产品类型整理后续资料。</p>
+    <section class="resource-list" :aria-label="t('resourcesLabel')">
+      <article v-for="item in resources" :key="item.title">
+        <strong>{{ item.label }}</strong>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.desc }}</p>
       </article>
     </section>
   </main>

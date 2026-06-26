@@ -1,46 +1,17 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { revealOnScroll } from '@/utils/motion'
+import { useI18n, useStaticLists } from '@/i18n'
 
 const sectionRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
+const lists = useStaticLists()
 
-const steps = [
-  {
-    index: '01',
-    code: 'CN',
-    title: '中国供应链',
-    desc: '产品由中国供应链合作方提供生产、样品、图片、基础资料与供货支持',
-  },
-  {
-    index: '02',
-    code: 'FR',
-    title: '法国销售管理',
-    desc: '法国团队负责客户沟通、需求确认、资料对接、订单协调与销售管理',
-  },
-  {
-    index: '03',
-    code: 'EU',
-    title: '欧洲专业客户',
-    desc: '面向法国及欧洲安防、机构、企业及专业采购场景提供展示与咨询',
-  },
-]
-
-const capabilities = [
-  '产品资料整理',
-  '客户需求确认',
-  '商务沟通支持',
-  '订单协调',
-  '中法双语展示',
-  '技术文件申请',
-  '样品资料准备',
-  '欧洲客户跟进',
-  '采购场景咨询',
-  '供货节奏确认',
-  '售前资料对接',
-  '后续商务跟进',
-]
-
-const capabilityTrack = [...capabilities, ...capabilities]
+const steps = computed(() => lists.managementSteps())
+const capabilityTrack = computed(() => {
+  const capabilities = lists.capabilities()
+  return [...capabilities, ...capabilities]
+})
 
 onMounted(() => {
   if (!sectionRef.value) return
@@ -62,9 +33,9 @@ onMounted(() => {
       <p>FRANCE SALES MANAGEMENT</p>
 
       <div>
-        <h2>中国供应链，法国销售与管理团队</h2>
+        <h2>{{ t('managementTitle') }}</h2>
         <span>
-          网站定位不是普通电商，而是面向法国及欧洲专业客户的产品展示、资料对接与销售管理平台。中国供应链负责产品与生产支持，法国团队负责市场沟通、客户跟进与商务协调</span>
+          {{ t('managementDescription') }}</span>
       </div>
     </div>
 
@@ -89,13 +60,13 @@ onMounted(() => {
           </div>
         </div>
 
-        <h3>法国本地销售管理，让供应链产品更适合欧洲专业客户沟通。</h3>
+        <h3>{{ t('managementIntroTitle') }}</h3>
 
         <p>
-          对于弹道防护类产品，客户通常需要先确认产品类别、技术资料、应用场景、文件支持与后续商务安排。网站将咨询流程聚焦在专业展示、资料确认与可信对接。
+          {{ t('managementIntroDesc') }}
         </p>
 
-        <a href="#contact">联系销售团队</a>
+        <a href="#contact">{{ t('contactSalesTeam') }}</a>
       </div>
 
       <div class="management-section__flow">
@@ -113,7 +84,7 @@ onMounted(() => {
       </div>
     </div>
 
-    <div class="management-section__capabilities management-animate" aria-label="服务能力标签">
+    <div class="management-section__capabilities management-animate" :aria-label="t('capabilityLabel')">
       <div class="management-section__capability-track">
         <span v-for="(item, index) in capabilityTrack" :key="`${item}-${index}`">
           {{ item }}

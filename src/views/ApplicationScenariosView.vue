@@ -1,34 +1,25 @@
+<script setup lang="ts">
+import { computed } from 'vue'
+import { useI18n, useStaticLists } from '@/i18n'
+
+const { t } = useI18n()
+const lists = useStaticLists()
+const scenarios = computed(() => lists.scenarios())
+</script>
+
 <template>
   <main class="scenario-page">
     <section class="scenario-hero">
       <p>APPLICATION SCENARIOS</p>
-      <h1>应用场景</h1>
-      <span>按专业客户的使用场景组织产品线索，帮助快速判断应查看哪些防护装备系列。</span>
+      <h1>{{ t('scenariosTitle') }}</h1>
+      <span>{{ t('scenariosDescription') }}</span>
     </section>
 
-    <section class="scenario-grid" aria-label="应用场景列表">
-      <article>
-        <span>01</span>
-        <h2>执法与安防</h2>
-        <p>适合查看警用防弹衣、防弹头盔、防弹盾牌及软质防护组件。</p>
-      </article>
-
-      <article>
-        <span>02</span>
-        <h2>个人防护配置</h2>
-        <p>围绕防弹背心、插板、头盔和附件组合，整理基础产品资料。</p>
-      </article>
-
-      <article>
-        <span>03</span>
-        <h2>车辆与设施防护</h2>
-        <p>适合查看装甲板、PE 板、防弹格栅等特殊防护材料与方案。</p>
-      </article>
-
-      <article>
-        <span>04</span>
-        <h2>机构采购沟通</h2>
-        <p>面向参数确认、图片资料、规格文件和后续商务沟通的资料对接流程。</p>
+    <section class="scenario-grid" :aria-label="t('scenariosLabel')">
+      <article v-for="(item, index) in scenarios" :key="item.title">
+        <span>{{ String(index + 1).padStart(2, '0') }}</span>
+        <h2>{{ item.title }}</h2>
+        <p>{{ item.desc }}</p>
       </article>
     </section>
   </main>

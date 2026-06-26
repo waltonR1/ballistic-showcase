@@ -1,15 +1,18 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
 import { products } from '@/data/products'
+import { productDescription, productName, useI18n, variantName } from '@/i18n'
 import { assetUrl } from '@/utils/asset'
+
+const { t } = useI18n()
 </script>
 
 <template>
   <main class="products-page">
     <section class="products-page__hero">
       <p>ALL PRODUCTS</p>
-      <h1>全部产品目录</h1>
-      <span> 展示当前可用于产品资料对接与销售沟通的主要弹道防护装备类别。</span>
+      <h1>{{ t('productsPageTitle') }}</h1>
+      <span>{{ t('productsPageDescription') }}</span>
     </section>
 
     <section class="products-page__grid">
@@ -20,19 +23,19 @@ import { assetUrl } from '@/utils/asset'
         :to="`/products/${item.id}`"
       >
         <div class="product-item__image">
-          <img :src="assetUrl(item.image)" :alt="item.nameZh" />
+          <img :src="assetUrl(item.image)" :alt="productName(item)" />
         </div>
 
         <div class="product-item__content">
           <p>{{ item.eyebrow }}</p>
-          <h2>{{ item.nameZh }}</h2>
-          <span>{{ item.descriptionZh }}</span>
+          <h2>{{ productName(item) }}</h2>
+          <span>{{ productDescription(item) }}</span>
 
           <div class="product-item__variants">
-            <strong>{{ item.variants.length }} 个产品</strong>
+            <strong>{{ item.variants.length }} {{ t('productCount') }}</strong>
             <div>
               <span v-for="variant in item.variants.slice(0, 4)" :key="variant.nameZh">
-                {{ variant.nameZh }}
+                {{ variantName(item, variant) }}
               </span>
             </div>
           </div>

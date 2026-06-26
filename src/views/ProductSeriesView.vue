@@ -3,10 +3,22 @@ import { computed, onMounted, ref } from 'vue'
 import { RouterLink, useRoute } from 'vue-router'
 import gsap from 'gsap'
 import { getProductById } from '@/data/products'
+import {
+  productDescription,
+  productName,
+  productSecondaryName,
+  productTags,
+  useI18n,
+  variantDescription,
+  variantName,
+  variantSecondaryName,
+  variantTags,
+} from '@/i18n'
 import { assetUrl } from '@/utils/asset'
 
 const route = useRoute()
 const pageRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
 
 const product = computed(() => {
   return getProductById(String(route.params.seriesId))
@@ -32,22 +44,22 @@ onMounted(() => {
       <section class="series-hero">
         <div class="series-hero__content series-animate">
           <div class="series-hero__breadcrumb">
-            <RouterLink to="/">首页</RouterLink>
+            <RouterLink to="/">{{ t('breadcrumbHome') }}</RouterLink>
             <span>/</span>
-            <RouterLink to="/products">产品目录</RouterLink>
+            <RouterLink to="/products">{{ t('breadcrumbProducts') }}</RouterLink>
             <span>/</span>
-            <strong>{{ product.nameZh }}</strong>
+            <strong>{{ productName(product) }}</strong>
           </div>
 
           <p>{{ product.eyebrow }}</p>
           <h1>
-            {{ product.nameZh }}
-            <span>{{ product.nameFr }}</span>
+            {{ productName(product) }}
+            <span>{{ productSecondaryName(product) }}</span>
           </h1>
-          <strong>{{ product.descriptionZh }}</strong>
+          <strong>{{ productDescription(product) }}</strong>
 
           <div class="series-hero__tags">
-            <span v-for="tag in product.tags" :key="tag">{{ tag }}</span>
+            <span v-for="tag in productTags(product)" :key="tag">{{ tag }}</span>
           </div>
         </div>
       </section>
@@ -55,8 +67,8 @@ onMounted(() => {
       <section class="series-products">
         <div class="series-products__header series-animate">
           <p>PRODUCTS IN THIS SERIES</p>
-          <h2>选择具体产品</h2>
-          <span>进入具体产品详情后，可以查看该产品对应的多张图片、基础信息和资料申请说明。</span>
+          <h2>{{ t('seriesChooseTitle') }}</h2>
+          <span>{{ t('seriesChooseDescription') }}</span>
         </div>
 
         <div class="series-products__grid series-animate">
@@ -67,21 +79,21 @@ onMounted(() => {
             :to="`/products/${product.id}/${variant.id}`"
           >
             <div class="series-card__image">
-              <img :src="assetUrl(variant.image)" :alt="variant.nameZh" />
+              <img :src="assetUrl(variant.image)" :alt="variantName(product, variant)" />
             </div>
 
             <div class="series-card__content">
-              <p>{{ variant.nameFr || product.nameFr }}</p>
-              <h3>{{ variant.nameZh }}</h3>
-              <span>{{ variant.descriptionZh }}</span>
+              <p>{{ variantSecondaryName(product, variant) }}</p>
+              <h3>{{ variantName(product, variant) }}</h3>
+              <span>{{ variantDescription(product, variant) }}</span>
 
               <div class="series-card__meta">
-                <strong>{{ variant.gallery.length }} 张图片</strong>
-                <small>查看详情</small>
+                <strong>{{ variant.gallery.length }} {{ t('imageCount') }}</strong>
+                <small>{{ t('viewDetail') }}</small>
               </div>
 
               <div class="series-card__tags">
-                <em v-for="tag in variant.tags" :key="tag">{{ tag }}</em>
+                <em v-for="tag in variantTags(product, variant)" :key="tag">{{ tag }}</em>
               </div>
             </div>
           </RouterLink>
@@ -90,8 +102,8 @@ onMounted(() => {
     </template>
 
     <section v-else class="not-found">
-      <h1>产品目录不存在</h1>
-      <RouterLink to="/products">返回产品目录</RouterLink>
+      <h1>{{ t('seriesNotFound') }}</h1>
+      <RouterLink to="/products">{{ t('backProducts') }}</RouterLink>
     </section>
   </main>
 </template>

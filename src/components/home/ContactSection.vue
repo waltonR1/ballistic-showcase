@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import { revealOnScroll } from '@/utils/motion'
+import { products } from '@/data/products'
+import { productName, useI18n } from '@/i18n'
 
 const sectionRef = ref<HTMLElement | null>(null)
+const { t } = useI18n()
 
 onMounted(() => {
   if (!sectionRef.value) return
@@ -22,9 +25,9 @@ onMounted(() => {
       <p>CONTACT & RFQ</p>
 
       <div>
-        <h2>产品咨询</h2>
+        <h2>{{ t('contactTitle') }}</h2>
         <span>
-          面向法国及欧洲专业客户，提供产品目录、基础参数、图片资料、规格文件与商务沟通支持。请通过正式联系确认防护等级、认证资料、交付范围与报价信息。
+          {{ t('contactDescription') }}
         </span>
       </div>
     </div>
@@ -33,13 +36,13 @@ onMounted(() => {
       <div class="contact-section__info contact-animate">
         <div class="contact-section__panel">
           <span>PROFESSIONAL ENQUIRY</span>
-          <h3>为了更快匹配资料，请尽量说明以下信息</h3>
+          <h3>{{ t('contactPanelTitle') }}</h3>
 
           <ul>
-            <li>目标产品类别，例如背心、头盔、盾牌、插板或软质防护组件</li>
-            <li>应用场景与采购主体，例如安防、机构采购、企业防护或项目配套</li>
-            <li>希望获取的资料，例如产品图、基础参数、规格说明、测试文件或报价</li>
-            <li>所在国家、数量范围、时间计划与期望沟通语言</li>
+            <li>{{ t('contactBullet1') }}</li>
+            <li>{{ t('contactBullet2') }}</li>
+            <li>{{ t('contactBullet3') }}</li>
+            <li>{{ t('contactBullet4') }}</li>
           </ul>
         </div>
 
@@ -64,41 +67,37 @@ onMounted(() => {
       <form class="contact-form contact-animate" @submit.prevent>
         <div class="contact-form__row">
           <label>
-            <span>姓名 / 公司</span>
-            <input type="text" placeholder="请输入姓名或公司名称" />
+            <span>{{ t('nameCompany') }}</span>
+            <input type="text" :placeholder="t('nameCompanyPlaceholder')" />
           </label>
 
           <label>
-            <span>邮箱</span>
+            <span>{{ t('email') }}</span>
             <input type="email" placeholder="name@example.com" />
           </label>
         </div>
 
         <label>
-          <span>感兴趣的产品</span>
+          <span>{{ t('interestedProduct') }}</span>
           <select>
-            <option>防弹背心</option>
-            <option>防弹头盔</option>
-            <option>防弹盾牌</option>
-            <option>防弹插板</option>
-            <option>防弹芯片 / 软质防护组件</option>
-            <option>其他防护方案</option>
+            <option v-for="item in products" :key="item.id">{{ productName(item) }}</option>
+            <option>{{ t('otherProtection') }}</option>
           </select>
         </label>
 
         <label>
-          <span>需求说明</span>
-          <textarea placeholder="请说明产品类别、应用场景、数量范围、目标资料类型或其他商务需求"></textarea>
+          <span>{{ t('requirement') }}</span>
+          <textarea :placeholder="t('requirementPlaceholder')"></textarea>
         </label>
 
         <div class="contact-form__notice">
-          <span>重要提示</span>
+          <span>{{ t('importantNotice') }}</span>
           <p>
-            防护等级、测试报告、认证文件与报价信息需结合具体产品型号和使用场景确认。提交需求后，我们会优先对接产品资料、基础参数与后续商务沟通安排。
+            {{ t('contactNotice') }}
           </p>
         </div>
 
-        <a class="contact-form__button" href="mailto:contact@example.com">通过邮件发送咨询</a>
+        <a class="contact-form__button" href="mailto:contact@example.com">{{ t('sendEmail') }}</a>
       </form>
     </div>
   </section>

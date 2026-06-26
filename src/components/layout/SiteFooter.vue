@@ -1,34 +1,38 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router'
+import { products } from '@/data/products'
+import { productName, useI18n } from '@/i18n'
+
+const { t } = useI18n()
+const footerProducts = products.slice(0, 4)
 </script>
 
 <template>
   <footer class="site-footer">
     <div class="site-footer__inner">
       <section class="site-footer__brand">
-        <p>铠福科技</p>
-        <h3>弹道防护装备资料与项目对接平台</h3>
-        <span>面向法国及欧洲专业客户，集中展示防护装备目录、制造支持与资料申请入口。</span>
+        <p>{{ t('brand') }}</p>
+        <h3>{{ t('footerTitle') }}</h3>
+        <span>{{ t('footerDesc') }}</span>
       </section>
 
       <section class="site-footer__group">
-        <strong>产品目录</strong>
-        <RouterLink to="/products/vest">防弹背心</RouterLink>
-        <RouterLink to="/products/helmet">防弹头盔</RouterLink>
-        <RouterLink to="/products/shield">防弹盾牌</RouterLink>
-        <RouterLink to="/products/plate">防弹插板</RouterLink>
+        <strong>{{ t('footerProducts') }}</strong>
+        <RouterLink v-for="item in footerProducts" :key="item.id" :to="`/products/${item.id}`">
+          {{ productName(item) }}
+        </RouterLink>
       </section>
 
       <section class="site-footer__group">
-        <strong>服务范围</strong>
-        <RouterLink to="/manufacturing">制造与供货支持</RouterLink>
-        <RouterLink to="/resources">技术资料申请</RouterLink>
-        <RouterLink to="/scenarios">防护方案说明</RouterLink>
-        <span>防护等级以正式文件为准</span>
+        <strong>{{ t('footerServices') }}</strong>
+        <RouterLink to="/manufacturing">{{ t('footerManufacturing') }}</RouterLink>
+        <RouterLink to="/resources">{{ t('footerResources') }}</RouterLink>
+        <RouterLink to="/scenarios">{{ t('footerScenarios') }}</RouterLink>
+        <span>{{ t('footerDisclaimer') }}</span>
       </section>
 
       <section class="site-footer__contact">
-        <strong>联系方式</strong>
+        <strong>{{ t('footerContact') }}</strong>
         <a href="mailto:contact@kaifu-tech.com">contact@kaifu-tech.com</a>
       </section>
     </div>
